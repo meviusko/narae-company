@@ -7,91 +7,126 @@
   <title>NARAE COMPANY</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: white;
-      text-align: center;
-      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+      color: #111;
       margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 32px 16px;
     }
     .logo img {
       width: 240px;
+      height: auto;
+      display: block;
+      margin: 0 auto 24px;
+    }
+    .sns-icons {
       margin-bottom: 24px;
     }
-    h1 {
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 32px;
+    .sns-icons img {
+  width: 64px;
+  height: 64px;
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      margin: 0 8px;
     }
+    .link-card {
+  font-size: 1.3rem;
+  font-weight: bold;
+      background: #111;
+      color: #fff;
+      border-radius: 12px;
+      margin: 12px 0;
+      padding: 16px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  
     .product-card {
       background: #f5f5f5;
-      border-radius: 20px;
-      padding: 24px;
-      margin: 0 auto 24px auto;
-      max-width: 400px;
-    }
-    .product-card img {
-      width: 75%;
       border-radius: 12px;
+      padding: 12px;
+      margin: 16px auto;
+      max-width: 90%;
     }
-    .product-card h2 {
-      font-size: 1.2rem;
-      margin-top: 16px;
+    .product-card h3 {
+      margin: 8px 0 4px;
     }
     .product-card p {
       font-size: 0.9rem;
-      color: #666;
+      color: #333;
     }
-    .button {
-      margin-top: 16px;
-      background: black;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
-      border: none;
+    
+    .emphasis-text {
+      font-size: 1.3rem;
+      font-weight: bold;
     }
-  </style>
+    
+    .melaxin-card {
+      padding: 12px;
+      font-size: 1.2rem;
+    }
+    </style>
+    
+    
+    
 
-  <script>
-    function toggleDetails(id) {
-      const el = document.getElementById(id);
-      if (el.style.display === 'none' || el.style.display === '') {
-        el.style.display = 'block';
-      } else {
-        el.style.display = 'none';
-      }
+<script>
+  function toggleDetails(id) {
+    const el = document.getElementById(id);
+    if (el.style.display === 'none' || el.style.display === '') {
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
     }
-  </script>
+  }
+</script>
+
 </head>
-
 <body>
-  <div class="logo">
-    <img src="logo.png" alt="NARAE COMPANY 로고" />
-  </div>
-  <h1>naracompany 제품소개</h1>
+  <div class="container">
+    <div class="logo">
+      <img src="nr_logo.png" alt="Narae Logo" />
+    </div>
 
-  <div class="product-card">
-    <img src="206444_410774_554.png" alt="BonDex Clinic" />
-    <h2>BonDex Clinic</h2>
-    <p>프리미엄 헤어케어</p>
-    <button class="button" onclick="toggleDetails('details1')">View</button>
-<div id="details1" style="display:none; margin-top: 10px; font-size: 0.85rem; color: #444;">설명: 프리미엄 헤어 케어 제품<br>예시 가격: 39,000원</div>
-  </div>
+    <div class="sns-icons">
+      <a href="#"><img src="instagram.png" alt="Instagram" /></a>
+      <a href="#"><img src="youtube.png" alt="YouTube" /></a>
+      <a href="#"><img src="tiktok.png" alt="TikTok" /></a>
+      <a href="#"><img src="facebook.png" alt="Facebook" /></a>
+    </div>
 
-  <div class="product-card">
-    <img src="241023000655713.webp" alt="EyePhalt" />
-    <h2>EyePhalt</h2>
-    <p>눈가 케어</p>
-    <button class="button" onclick="toggleDetails('details2')">View</button>
-<div id="details2" style="display:none; margin-top: 10px; font-size: 0.85rem; color: #444;">설명: 눈가 주름 & 보습 집중 케어<br>예시 가격: 29,000원</div>
-  </div>
-
-  <div class="product-card">
-    <img src="a3077dfe9b2588d3fa69cd24fc49c45b.png" alt="Dr.Melaxin Cemenrete" />
-    <h2>Dr.Melaxin Cemenrete</h2>
-    <p>피코토닉 샷 칼슘 앰플 & 크림</p>
-    <button class="button" onclick="toggleDetails('details3')">View</button>
-<div id="details3" style="display:none; margin-top: 10px; font-size: 0.85rem; color: #444;">설명: 색소침착 케어 앰플 + 크림<br>예시 가격: 49,000원</div>
+    
+    <div class="link-card melaxin-card" onclick="toggleDetails('melaxin-products')"><span class="emphasis-text">Dr.Melaxin</span></div>
+    <div id="melaxin-products" style="display:none; padding: 8px 0;">
+      <div class="product-card">
+        <img src="bondex_clinic.png" style="width:80%; border-radius:12px; margin: 10px 0;" alt="BonDex Clinic" />
+        <h3>BonDex Clinic</h3>
+        <p>프리미엄 헤어 케어 제품<br>₩39,000</p>
+      </div>
+      <div class="product-card">
+        <img src="6128d637a82c2c472bba840d58a7c788-removebg-preview.png" style="width:80%; border-radius:12px; margin: 10px 0;" alt="EyePhalt" />
+        <h3>EyePhalt</h3>
+        <p>눈가 주름 & 보습 집중 케어<br>₩29,000</p>
+      </div>
+      <div class="product-card">
+        <img src="206444_410774_554-removebg-preview.png" style="width:80%; border-radius:12px; margin: 10px 0;" alt="Dr.Melaxin Cemenrete" />
+        <h3>Dr.Melaxin Cemenrete</h3>
+        <p>색소침착 케어 앰플 + 크림<br>₩49,000</p>
+      </div>
+    </div>
+    
+    <div class="link-card">Card 1</div>
+    <div class="link-card">Card 2</div>
+    <div class="link-card">Card 3</div>
+    <div class="link-card">Card 4</div>
+    <div class="link-card">Card 5</div>
   </div>
 </body>
-
 </html>
