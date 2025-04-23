@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NARAE COMPANY</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: white;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    .logo img {
+      width: 240px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 32px;
+    }
+    .product-card {
+      background: #f5f5f5;
+      border-radius: 20px;
+      padding: 24px;
+      margin: 0 auto 24px auto;
+      max-width: 400px;
+    }
+    .product-card img {
+      width: 75%;
+      border-radius: 12px;
+    }
+    .product-card h2 {
+      font-size: 1.2rem;
+      margin-top: 16px;
+    }
+    .product-card p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .button {
+      margin-top: 16px;
+      background: black;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+    }
+  </style>
+
+  <script>
+    function toggleDetails(id) {
+      const el = document.getElementById(id);
+      if (el.style.display === 'none' || el.style.display === '') {
+        el.style.display = 'block';
+      } else {
+        el.style.display = 'none';
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="logo">
+    <img src="logo.png" alt="NARAE COMPANY 로고" />
+  </div>
+  <h1>naracompany 제품소개</h1>
+
+  <div class="product-card">
+    <img src="206444_410774_554.png" alt="BonDex Clinic" />
+    <h2>BonDex Clinic</h2>
+    <p>프리미엄 헤어케어</p>
+    <button class="button" onclick="toggleDetails('details1')">View</button>
+<div id="details1" style="display:none; margin-top: 10px; font-size: 0.85rem; color: #444;">설명: 프리미엄 헤어 케어 제품<br>예시 가격: 39,000원</div>
+  </div>
+
+  <div class="product-card">
+    <img src="241023000655713.webp" alt="EyePhalt" />
+    <h2>EyePhalt</h2>
+    <p>눈가 케어</p>
+    <button class="button" onclick="toggleDetails('details2')">View</button>
+<div id="details2" style="display:none; margin-top: 10px; font-size: 0.85rem; color: #444;">설명: 눈가 주름 & 보습 집중 케어<br>예시 가격: 29,000원</div>
+  </div>
+
+  <div class="product-card">
+    <img src="a3077dfe9b2588d3fa69cd24fc49c45b.png" alt="Dr.Melaxin Cemenrete" />
+    <h2>Dr.Melaxin Cemenrete</h2>
+    <p>피코토닉 샷 칼슘 앰플 & 크림</p>
+    <button class="button" onclick="toggleDetails('details3')">View</button>
+<div id="details3" style="display:none; margin-top: 10px; font-size: 0.85rem; color: #444;">설명: 색소침착 케어 앰플 + 크림<br>예시 가격: 49,000원</div>
+  </div>
+</body>
+
+</html>
