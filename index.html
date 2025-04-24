@@ -1,15 +1,14 @@
 
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>NARAE COMPANY</title>
-<style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NARAE COMPANY</title>
+  <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #fff;
+      background: #f0f0f0;
       color: #111;
       margin: 0;
       padding: 0;
@@ -29,17 +28,19 @@
     .sns-icons {
       margin-bottom: 24px;
     }
-    .sns-icons img {
-  width: 64px;
-  height: 64px;
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
+    .sns-icons a {
+      text-decoration: none;
+      display: inline-block;
       margin: 0 8px;
     }
+    .sns-icons img {
+      width: 32px;
+      height: 32px;
+      vertical-align: middle;
+    }
     .link-card {
-  font-size: 1.3rem;
-  font-weight: bold;
+      font-size: 1.3rem;
+      font-weight: bold;
       background: #111;
       color: #fff;
       border-radius: 12px;
@@ -48,9 +49,10 @@
       font-size: 1rem;
       cursor: pointer;
     }
-  
     .product-card {
-      background: #f5f5f5;
+      background: #e0e0e0;
+      border: 1px solid #ccc;
+      padding: 16px;
       border-radius: 12px;
       padding: 12px;
       margin: 16px auto;
@@ -63,71 +65,70 @@
       font-size: 0.9rem;
       color: #333;
     }
-    
     .emphasis-text {
       font-size: 1.3rem;
       font-weight: bold;
     }
-    
     .melaxin-card {
       padding: 12px;
       font-size: 1.2rem;
     }
-    </style>
-<script>
-  function toggleDetails(id) {
-    const el = document.getElementById(id);
-    if (el.style.display === 'none' || el.style.display === '') {
-      el.style.display = 'block';
-    } else {
-      el.style.display = 'none';
+  </style>
+  <script>
+    function toggleDetails(id) {
+      const el = document.getElementById(id);
+      if (el.style.display === 'none' || el.style.display === '') {
+        el.style.display = 'block';
+      } else {
+        el.style.display = 'none';
+      }
     }
-  }
-</script>
-<style>
-  .sns-icons a img {
-    pointer-events: auto !important;
-    position: relative;
-    z-index: 10;
-    width: 32px;
-    height: 32px;
-  }
-</style>
+  </script>
 </head>
 <body>
 <div class="container">
-<div class="logo">
-<img alt="Narae Logo" src="nr_logo.png"/>
-</div>
-<div class="sns-icons">
-<a href="https://lite.tiktok.com/t/ZSr7t6a2C/" rel="noopener noreferrer" target="_blank"><a href="https://lite.tiktok.com/t/ZSr7t6a2C/" rel="noopener noreferrer" target="_blank"><img alt="Instagram" src="instagram.png"/></a>
-<a href="https://www.facebook.com/share/1JFkHKYCg4/?mibextid=wwXIfr" rel="noopener noreferrer" target="_blank"><a href="https://www.facebook.com/share/1JFkHKYCg4/?mibextid=wwXIfr" rel="noopener noreferrer" target="_blank"><img alt="YouTube" src="youtube.png"/></a>
-<a href="https://www.instagram.com/somya___ag?igsh=Zm4xbnU1ZnIwNXNz&amp;utm_source=qr" rel="noopener noreferrer" target="_blank"><a href="https://www.instagram.com/somya___ag?igsh=Zm4xbnU1ZnIwNXNz&amp;utm_source=qr" rel="noopener noreferrer" target="_blank"><img alt="TikTok" src="tiktok.png"/></a>
-<a href="https://youtube.com/@khatadfilm7377?si=VFGZ3WNEGclvbdeK" rel="noopener noreferrer" target="_blank"><a href="https://youtube.com/@khatadfilm7377?si=VFGZ3WNEGclvbdeK" rel="noopener noreferrer" target="_blank"><img alt="Facebook" src="facebook.png"/></a>
-</a></a></a></a></div>
-<div class="link-card melaxin-card" onclick="toggleDetails('melaxin-products')"><span class="emphasis-text">Dr.Melaxin</span></div>
-<div id="melaxin-products" style="display:none; padding: 8px 0;">
-<div class="product-card">
-<img alt="BonDex Clinic" src="206444_410774_554-removebg-preview.png" style="width:80%; border-radius:12px; margin: 10px 0;"/>
-<h3>BonDex Clinic</h3>
-<p>프리미엄 헤어 케어 제품<br/>₩39,000</p>
-</div>
-<div class="product-card">
-<img alt="EyePhalt" src="6128d637a82c2c472bba840d58a7c788-removebg-preview.png" style="width:80%; border-radius:12px; margin: 10px 0;"/>
-<h3>EyePhalt</h3>
-<p>눈가 주름 &amp; 보습 집중 케어<br/>₩29,000</p>
-</div>
-<div class="product-card">
-<img alt="Dr.Melaxin Cemenrete" src="dr.melaxin_cemenrete.png" style="width:80%; border-radius:12px; margin: 10px 0;"/>
-<h3>Dr.Melaxin Cemenrete</h3>
-<p>색소침착 케어 앰플 + 크림<br/>₩49,000</p>
-</div>
-</div>
-<div class="link-card">Card 1</div>
-<div class="link-card">Card 2</div>
-<div class="link-card">Card 3</div>
-<div class="link-card">Card 4</div>
-<div class="link-card">Card 5</div>
+  <div class="logo">
+    <img alt="Narae Logo" src="nr_logo.png"/>
+  </div>
+  <div class="sns-icons">
+    <a href="https://lite.tiktok.com/t/ZSr7t6a2C/" target="_blank">
+      <img src="tiktok.png" alt="TikTok" />
+    </a>
+    <a href="https://www.instagram.com/somya___ag?igsh=Zm4xbnU1ZnIwNXNz&amp;utm_source=qr" target="_blank">
+      <img src="instagram.png" alt="Instagram" />
+    </a>
+    <a href="https://www.facebook.com/share/1JFkHKYCg4/?mibextid=wwXIfr" target="_blank">
+      <img src="facebook.png" alt="Facebook" />
+    </a>
+    <a href="https://youtube.com/@khatadfilm7377?si=VFGZ3WNEGclvbdeK" target="_blank">
+      <img src="youtube.png" alt="YouTube" />
+    </a>
+  </div>
+
+  <div class="link-card melaxin-card" onclick="toggleDetails('melaxin-products')"><span class="emphasis-text">Dr.Melaxin</span></div>
+  <div id="melaxin-products" style="display:none; padding: 8px 0;">
+    <div class="product-card">
+      <img alt="BonDex Clinic" src="206444_410774_554-removebg-preview.png" style="width:80%; border-radius:12px; margin: 10px 0;"/>
+      <h3>BonDex Clinic</h3>
+      <p>프리미엄 헤어 케어 제품<br/>₩39,000</p>
+    </div>
+    <div class="product-card">
+      <img alt="EyePhalt" src="6128d637a82c2c472bba840d58a7c788-removebg-preview.png" style="width:80%; border-radius:12px; margin: 10px 0;"/>
+      <h3>EyePhalt</h3>
+      <p>눈가 주름 & 보습 집중 케어<br/>₩29,000</p>
+    </div>
+    <div class="product-card">
+      <img alt="Dr.Melaxin Cemenrete" src="dr.melaxin_cemenrete.png" style="width:80%; border-radius:12px; margin: 10px 0;"/>
+      <h3>Dr.Melaxin Cemenrete</h3>
+      <p>색소침착 케어 앰플 + 크림<br/>₩49,000</p>
+    </div>
+  </div>
+
+  <div class="link-card">Card 1</div>
+  <div class="link-card">Card 2</div>
+  <div class="link-card">Card 3</div>
+  <div class="link-card">Card 4</div>
+  <div class="link-card">Card 5</div>
 </div>
 </body>
 </html>
