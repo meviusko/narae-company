@@ -41,94 +41,130 @@
     .link-card {
       font-size: 1.3rem;
       font-weight: bold;
-      background: #111;
+      background: #727275;
       color: #fff;
       border-radius: 12px;
       margin: 12px 0;
       padding: 16px;
-      font-size: 1rem;
       cursor: pointer;
     }
-    .product-card {
+    .product-card p { font-size: 0.85rem; color: #333; }
+.product-card {
       background: #e0e0e0;
       border: 1px solid #ccc;
-      padding: 16px;
+      padding: 2px;
+      max-width: 60%;
+      margin: 4px auto;
+      text-align: center;
       border-radius: 12px;
-      padding: 12px;
-      margin: 16px auto;
-      max-width: 90%;
+      overflow: hidden;
     }
-    .product-card h3 {
-      margin: 8px 0 4px;
-    }
-    .product-card p {
-      font-size: 0.9rem;
-      color: #333;
-    }
-    .emphasis-text {
-      font-size: 1.3rem;
-      font-weight: bold;
-    }
-    .melaxin-card {
-      padding: 12px;
-      font-size: 1.2rem;
-    }
+    
+.view-toggle {
+  display: block;
+  margin: 4px auto;
+  padding: 6px 16px;
+  background-color: #2c3e50;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-align: center;
+  width: fit-content;
+}
+
   </style>
-  <script>
-    function toggleDetails(id) {
-      const el = document.getElementById(id);
-      if (el.style.display === 'none' || el.style.display === '') {
-        el.style.display = 'block';
-      } else {
-        el.style.display = 'none';
-      }
-    }
-  </script>
+  
 </head>
 <body>
-<div class="container">
-  <div class="logo">
-    <img alt="Narae Logo" src="nr_logo.png"/>
-  </div>
-  <div class="sns-icons">
-    <a href="https://lite.tiktok.com/t/ZSr7t6a2C/" target="_blank">
-      <img src="tiktok.png" alt="TikTok" />
-    </a>
-    <a href="https://www.instagram.com/somya___ag?igsh=Zm4xbnU1ZnIwNXNz&amp;utm_source=qr" target="_blank">
-      <img src="instagram.png" alt="Instagram" />
-    </a>
-    <a href="https://www.facebook.com/share/1JFkHKYCg4/?mibextid=wwXIfr" target="_blank">
-      <img src="facebook.png" alt="Facebook" />
-    </a>
-    <a href="https://youtube.com/@khatadfilm7377?si=VFGZ3WNEGclvbdeK" target="_blank">
-      <img src="youtube.png" alt="YouTube" />
-    </a>
-  </div>
+  <div class="container">
+    <div class="logo">
+      <img alt="Narae Logo" src="nr_logo.png"/>
+    </div>
 
-  <div class="link-card melaxin-card" onclick="toggleDetails('melaxin-products')"><span class="emphasis-text">Dr.Melaxin</span></div>
-  <div id="melaxin-products" style="display:none; padding: 8px 0;">
-    <div class="product-card">
-      <img alt="BonDex Clinic" src="206444_410774_554-removebg-preview.png" style="width:80%; border-radius:12px; margin: 10px 0;"/>
-      <h3>BonDex Clinic</h3>
-      <p>프리미엄 헤어 케어 제품<br/>₩39,000</p>
+    <div class="sns-icons">
+      <a href="https://lite.tiktok.com/t/ZSr7t6a2C/" target="_blank"><img src="tiktok.png" alt="TikTok" /></a>
+      <a href="https://www.instagram.com/somya___ag?igsh=Zm4xbnU1ZnIwNXNz&amp;utm_source=qr" target="_blank"><img src="instagram.png" alt="Instagram" /></a>
+      <a href="https://www.facebook.com/share/1JFkHKYCg4/?mibextid=wwXIfr" target="_blank"><img src="facebook.png" alt="Facebook" /></a>
+      <a href="https://youtube.com/@khatadfilm7377?si=VFGZ3WNEGclvbdeK" target="_blank"><img src="youtube.png" alt="YouTube" /></a>
     </div>
-    <div class="product-card">
-      <img alt="EyePhalt" src="6128d637a82c2c472bba840d58a7c788-removebg-preview.png" style="width:80%; border-radius:12px; margin: 10px 0;"/>
-      <h3>EyePhalt</h3>
-      <p>눈가 주름 & 보습 집중 케어<br/>₩29,000</p>
-    </div>
-    <div class="product-card">
-      <img alt="Dr.Melaxin Cemenrete" src="dr.melaxin_cemenrete.png" style="width:80%; border-radius:12px; margin: 10px 0;"/>
-      <h3>Dr.Melaxin Cemenrete</h3>
-      <p>색소침착 케어 앰플 + 크림<br/>₩49,000</p>
-    </div>
-  </div>
 
-  <div class="link-card">Card 1</div>
-  <div class="link-card">Card 2</div>
-  <div class="link-card">Card 3</div>
-  <div class="link-card">Card 4</div>
-  <div class="link-card">Card 5</div>
+    <div class="link-card" onclick="toggleSection('melaxin-products')">
+      <span class="emphasis-text">Dr.Melaxin</span>
+    </div>
+
+    <div id="melaxin-products" style="display:none;">
+
+<div class="product-card">
+  <img src="206444_410774_554-removebg-preview.png" style="width:60%; border-radius:12px; margin: 2px auto;" />
+  <p style="font-size: 0.8rem; font-family: sans-serif; font-weight: 500; margin-bottom: 4px;">BonDex Clinic</p>
+  <div onclick="toggleDetails('prod1-info')" class="view-toggle">View</div>
+  <div id="prod1-info" style="display:none;">
+    <p>프리미엄 헤어 케어 제품<br/>₩39,000</p>
+  </div>
 </div>
+
+
+
+<div class="product-card">
+  <img src="6128d637a82c2c472bba840d58a7c788-removebg-preview.png" style="width:75%; border-radius:12px; margin: 4px 0; display:block; margin:2px auto; display:block; margin:0 auto; padding:0; " />
+  <p style="font-size: 0.8rem; font-family: sans-serif; font-weight: 500; margin-bottom: 4px;">EyePhalt</p>
+  <div onclick="toggleDetails('prod2-info')" class="view-toggle">View</div>
+  <div id="prod2-info" style="display:none;">
+    <p>눈가 주름 & 보습 집중 케어<br/>₩29,000</p>
+  </div>
+</div>
+
+
+
+<div class="product-card">
+  <img src="dr.melaxin_cemenrete.png" style="width:75%; border-radius:12px; margin: 4px 0; display:block; margin:2px auto; display:block; margin:0 auto; padding:0; " />
+  <p style="font-size: 0.8rem; font-family: sans-serif; font-weight: 500; margin-bottom: 4px;">Dr.Melaxin Cemenrete</p>
+  <div onclick="toggleDetails('prod3-info')" class="view-toggle">View</div>
+  <div id="prod3-info" style="display:none;">
+    <p>색소침착 케어 앰플 + 크림<br/>₩49,000</p>
+  </div>
+</div>
+
+
+<div class="product-card">
+  <img src="dr.melaxin_astaxanthin.png" style="width:60%; border-radius:12px; margin: 2px auto;" />
+  <p style="font-size: 0.8rem; font-family: sans-serif; font-weight: 500; margin-bottom: 4px;">Astaxanthin Ampoule + Cream</p>
+  <div onclick="toggleDetails('prod4-info')" class="view-toggle">View</div>
+  <div id="prod4-info" style="display:none;">
+    <p>미백 앰플 & 캡슐 크림 세트<br/>₩59,000</p>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="dr.melaxin_dubai_peptide.png" style="width:60%; border-radius:12px; margin: 2px auto;" />
+  <p style="font-size: 0.8rem; font-family: sans-serif; font-weight: 500; margin-bottom: 4px;">Dubai Peptide Clay Mask</p>
+  <div onclick="toggleDetails('prod5-info')" class="view-toggle">View</div>
+  <div id="prod5-info" style="display:none;">
+    <p>모공 탄력 & 클렌징 머드 마스크<br/>₩44,000</p>
+  </div>
+</div>
+</div>
+<div class="link-card">Card 1</div>
+    <div class="link-card">Card 2</div>
+    <div class="link-card">Card 3</div>
+    <div class="link-card">Card 4</div>
+    <div class="link-card">Card 5</div>
+  </div>
+
+<script>
+  function toggleDetails(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+  }
+
+  function toggleSection(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+  }
+</script>
 </body>
 </html>
+
