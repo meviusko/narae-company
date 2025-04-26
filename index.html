@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>최종 사이트이동수정본</title>
+<title>최종 View버튼수정버전</title>
 <style>
   body {
     font-family: 'Segoe UI', sans-serif;
@@ -12,7 +12,7 @@
     text-align: center;
     margin: 0;
     padding: 0;
-    overflow-y: scroll; /* 스크롤 항상 유지해서 밀림 방지 */
+    overflow-y: scroll;
   }
   .container {
     max-width: 480px;
@@ -83,6 +83,9 @@
     font-size: 0.9rem;
     text-align: center;
     width: fit-content;
+    touch-action: manipulation;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
   }
   .price-info {
     display: none;
@@ -124,55 +127,46 @@ function toggleProducts(card, type) {
   const grid = document.createElement('div');
   grid.className = 'product-grid';
 
+  let html = "";
+
   if (type === 'melaxin') {
     const products = [
-      { img: '206444_410774_554-removebg-preview.png', name: 'BonDex Clinic', info: '프리미엄 헤어 케어 제품\n₩39,000' },
-      { img: '6128d637a82c2c472bba840d58a7c788-removebg-preview.png', name: 'EyePhalt', info: '눈가 주름 & 보습 집중 케어\n₩29,000' },
-      { img: 'dr.melaxin_cemenrete.png', name: 'Cemenrete', info: '색소침착 케어 앰플 + 크림\n₩49,000' },
-      { img: 'dr.melaxin_astaxanthin.png', name: 'Astaxanthin', info: '미백 앰플 & 캡슐 크림 세트\n₩59,000' },
-      { img: 'dr.melaxin_dubai_peptide.png', name: 'Dubai Peptide', info: '모공 탄력 & 클렌징 머드 마스크\n₩44,000' }
+      { img: '206444_410774_554-removebg-preview.png', name: 'BonDex Clinic', info: '프리미엄 헤어 케어 제품<br>₩39,000' },
+      { img: '6128d637a82c2c472bba840d58a7c788-removebg-preview.png', name: 'EyePhalt', info: '눈가 주름 & 보습 집중 케어<br>₩29,000' },
+      { img: 'dr.melaxin_cemenrete.png', name: 'Cemenrete', info: '색소침착 케어 앰플 + 크림<br>₩49,000' },
+      { img: 'dr.melaxin_astaxanthin.png', name: 'Astaxanthin', info: '미백 앰플 & 캡슐 크림 세트<br>₩59,000' },
+      { img: 'dr.melaxin_dubai_peptide.png', name: 'Dubai Peptide', info: '모공 탄력 & 클렌징 머드 마스크<br>₩44,000' }
     ];
-    products.forEach(p => {
-      const product = document.createElement('div');
-      product.className = 'product-card';
-      const img = document.createElement('img');
-      img.src = p.img;
-      const name = document.createElement('p');
-      name.innerText = p.name;
-
-      const viewBtn = document.createElement('div');
-      viewBtn.className = 'view-toggle';
-      viewBtn.innerText = 'View';
-
-      const priceInfo = document.createElement('div');
-      priceInfo.className = 'price-info';
-      priceInfo.innerText = p.info;
-
-      viewBtn.onclick = function() {
-        priceInfo.style.display = priceInfo.style.display === 'none' ? 'block' : 'none';
-      };
-
-      product.appendChild(img);
-      product.appendChild(name);
-      product.appendChild(viewBtn);
-      product.appendChild(priceInfo);
-      grid.appendChild(product);
+    products.forEach((p) => {
+      html += `
+      <div class="product-card">
+        <img src="${p.img}" alt="${p.name}">
+        <p>${p.name}</p>
+        <div class="view-toggle">View</div>
+        <div class="price-info">${p.info}</div>
+      </div>`;
     });
   } else {
     for (let i = 0; i < 2; i++) {
-      const product = document.createElement('div');
-      product.className = 'product-card';
-      const img = document.createElement('img');
-      img.src = 'nr_logo.png';
-      const text = document.createElement('p');
-      text.innerText = 'Coming Soon';
-      product.appendChild(img);
-      product.appendChild(text);
-      grid.appendChild(product);
+      html += `
+      <div class="product-card">
+        <img src="nr_logo.png" alt="Coming Soon">
+        <p>Coming Soon</p>
+      </div>`;
     }
   }
 
+  grid.innerHTML = html;
   card.after(grid);
+
+  // 추가: View 버튼에 pointerdown 이벤트 등록
+  grid.querySelectorAll('.view-toggle').forEach(button => {
+    button.addEventListener('pointerdown', function(e) {
+      e.preventDefault();
+      const priceInfo = this.nextElementSibling;
+      priceInfo.style.display = priceInfo.style.display === 'none' ? 'block' : 'none';
+    });
+  });
 }
 </script>
 </body>
