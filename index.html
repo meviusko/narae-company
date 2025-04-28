@@ -101,25 +101,21 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 1000;
+    overflow-y: auto;
   }
   
   .modal-content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
     background-color: white;
-    padding: 24px 24px 70px 24px;
+    margin: 20px auto;
+    padding: 24px;
     border-radius: 12px;
     width: 95%;
     max-width: 500px;
-    max-height: 80vh;
-    overflow-y: auto;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 24px;
-    position: relative;
   }
   
   .modal-header {
@@ -153,6 +149,7 @@
     background: #f5f5f5;
     border-radius: 8px;
     overflow: hidden;
+    touch-action: pan-y;
   }
   
   .modal-image {
@@ -198,20 +195,41 @@
     color: #666;
     line-height: 1.5;
     margin-top: 16px;
+    text-align: left;
+    padding: 0 16px;
+  }
+  .modal-description p {
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+  .modal-description ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .modal-description li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 20px;
+  }
+  .modal-description li:before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    color: #3b5770;
   }
   .modal-actions {
-    position: absolute;
+    position: sticky;
     left: 0;
     bottom: 0;
     width: 100%;
     display: flex;
     gap: 8px;
-    padding: 12px 24px;
+    padding: 12px 0;
     box-sizing: border-box;
     background: #fff;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
     border-top: 1px solid #eee;
+    margin-top: 16px;
   }
   .modal-btn {
     flex: 1;
@@ -234,11 +252,11 @@
   }
   @media (max-width: 600px) {
     .modal-content {
-      padding: 16px 8px 70px 8px;
+      margin: 10px auto;
+      padding: 16px;
     }
-    .modal-body {
-      flex-direction: column;
-      gap: 12px;
+    .modal-actions {
+      padding: 12px 0;
     }
     .modal-logo {
       width: 140px;
@@ -273,20 +291,28 @@
       <img src="nr_logo.png" alt="로고" class="modal-logo" onclick="goHome()">
     </div>
     <div class="modal-body">
-      <div class="modal-image-container">
-        <img class="modal-image active" id="modalImage1" src="" alt="">
-        <img class="modal-image" id="modalImage2" src="" alt="">
-        <img class="modal-image" id="modalImage3" src="" alt="">
-        <img class="modal-image" id="modalImage4" src="" alt="">
+      <div class="modal-image-container" id="modalImageContainer">
+        <img class="modal-image active" id="modalImage1" src="s1.png" alt="샴푸 이미지1">
+        <img class="modal-image" id="modalImage2" src="s2.png" alt="샴푸 이미지2">
+        <img class="modal-image" id="modalImage3" src="s3.png" alt="샴푸 이미지3">
       </div>
       <div class="modal-slider-dots">
         <span class="slider-dot active" onclick="showSlide(0)"></span>
         <span class="slider-dot" onclick="showSlide(1)"></span>
         <span class="slider-dot" onclick="showSlide(2)"></span>
-        <span class="slider-dot" onclick="showSlide(3)"></span>
       </div>
       <h3 class="modal-image-title" id="modalTitle"></h3>
-      <p class="modal-description" id="modalDescription">제품 설명이 여기에 들어갑니다.</p>
+      <div class="modal-description" id="modalDescription">
+        <p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
+        <ul>
+          <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
+          <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
+          <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
+          <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
+          <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
+          <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
+        </ul>
+      </div>
     </div>
     <div class="modal-actions">
       <button class="modal-btn buy" onclick="alert('구매하기 기능은 추후 구현됩니다.')">구매하기</button>
@@ -296,6 +322,25 @@
 </div>
 
 <script>
+// 이벤트 리스너 한 번만 등록
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('productModal');
+  
+  // ESC 키로 모달 닫기
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+  
+  // 모달 외부 클릭시 닫기
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+});
+
 function toggleProducts(card, type) {
   const existingGrid = card.nextElementSibling;
 
@@ -323,7 +368,6 @@ function toggleProducts(card, type) {
         <img src="${p.img}" alt="${p.name}">
         <p>${p.name}</p>
         <p class="view-toggle" onclick="openModal('${p.img}', '${p.name}')">View</p>
-        <div class="price-info"></div>
       </div>`;
     });
   } else {
@@ -342,43 +386,74 @@ function toggleProducts(card, type) {
 
 function openModal(imgSrc, title) {
   const modal = document.getElementById('productModal');
-  const modalImg = document.getElementById('modalImage1');
+  const modalImg1 = document.getElementById('modalImage1');
+  const modalImg2 = document.getElementById('modalImage2');
+  const modalImg3 = document.getElementById('modalImage3');
   const modalTitle = document.getElementById('modalTitle');
   
-  modalImg.src = imgSrc;
+  if (title === 'BonDex Clinic') {
+    modalImg1.src = 's1.png';
+    modalImg2.src = 's2.png';
+    modalImg3.src = 's3.png';
+  } else {
+    modalImg1.src = imgSrc;
+    modalImg2.src = '';
+    modalImg3.src = '';
+  }
+  
   modalTitle.textContent = title;
   modal.style.display = 'block';
-  
-  // ESC 키로 모달 닫기
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeModal();
-    }
-  });
-  
-  // 모달 외부 클릭시 닫기
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      closeModal();
-    }
-  });
 }
 
+let currentSlide = 0;
+
 function showSlide(index) {
-  // 모든 이미지 숨기기
-  document.querySelectorAll('.modal-image').forEach(img => {
-    img.classList.remove('active');
-  });
-  
-  // 모든 도트 비활성화
-  document.querySelectorAll('.slider-dot').forEach(dot => {
-    dot.classList.remove('active');
-  });
-  
-  // 선택된 이미지와 도트 활성화
-  document.getElementById('modalImage' + (index + 1)).classList.add('active');
-  document.querySelectorAll('.slider-dot')[index].classList.add('active');
+  const images = document.querySelectorAll('.modal-image');
+  const dots = document.querySelectorAll('.slider-dot');
+  if (index < 0) index = images.length - 1;
+  if (index >= images.length) index = 0;
+  images.forEach(img => img.classList.remove('active'));
+  dots.forEach(dot => dot.classList.remove('active'));
+  images[index].classList.add('active');
+  dots[index].classList.add('active');
+  currentSlide = index;
 }
+
+// 터치 및 마우스 이벤트 통합
+const imageContainer = document.getElementById('modalImageContainer');
+let startX = 0;
+let isDragging = false;
+
+function handleDragStart(e) {
+  startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+  isDragging = true;
+}
+
+function handleDragMove(e) {
+  if (!isDragging) return;
+  const currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+  const diffX = currentX - startX;
+  if (Math.abs(diffX) > 50) {
+    if (diffX < 0) showSlide(currentSlide + 1);
+    else showSlide(currentSlide - 1);
+    isDragging = false;
+  }
+}
+
+function handleDragEnd() {
+  isDragging = false;
+}
+
+// 터치 이벤트
+imageContainer.addEventListener('touchstart', handleDragStart);
+imageContainer.addEventListener('touchmove', handleDragMove);
+imageContainer.addEventListener('touchend', handleDragEnd);
+
+// 마우스 이벤트
+imageContainer.addEventListener('mousedown', handleDragStart);
+imageContainer.addEventListener('mousemove', handleDragMove);
+imageContainer.addEventListener('mouseup', handleDragEnd);
+imageContainer.addEventListener('mouseleave', handleDragEnd);
 
 function closeModal() {
   const modal = document.getElementById('productModal');
