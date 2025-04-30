@@ -26,7 +26,7 @@ let currentSlide = 0;
 console.log('script.js 로드됨');
 
 // 전역 함수 정의
-function toggleProducts(card, type) {
+window.toggleProducts = function(card, type) {
   console.log('toggleProducts 호출됨:', type);
   const existingGrid = card.nextElementSibling;
   
@@ -75,9 +75,9 @@ function toggleProducts(card, type) {
 
   grid.innerHTML = html;
   card.after(grid);
-}
+};
 
-function openModal(imgSrc, title, price) {
+window.openModal = function(imgSrc, title, price) {
   console.log('openModal 호출됨:', title);
   const modal = document.getElementById('productModal');
   const modalImg = document.getElementById('modalImage');
@@ -119,39 +119,31 @@ function openModal(imgSrc, title, price) {
   }
   
   modal.style.display = 'block';
-}
+};
 
-function closeModal() {
+window.closeModal = function() {
   console.log('closeModal 호출됨');
   const modal = document.getElementById('productModal');
   modal.style.display = 'none';
-}
+};
 
-function goHome() {
+window.goHome = function() {
   console.log('goHome 호출됨');
   closeModal();
   window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+};
 
-function showLoginForm() {
+window.showLoginForm = function() {
   console.log('showLoginForm 호출됨');
   const modal = document.getElementById('loginModal');
   modal.style.display = 'flex';
-}
+};
 
-function hideLoginForm() {
+window.hideLoginForm = function() {
   console.log('hideLoginForm 호출됨');
   const modal = document.getElementById('loginModal');
   modal.style.display = 'none';
-}
-
-// 전역 함수들을 window 객체에 등록
-window.toggleProducts = toggleProducts;
-window.openModal = openModal;
-window.closeModal = closeModal;
-window.goHome = goHome;
-window.showLoginForm = showLoginForm;
-window.hideLoginForm = hideLoginForm;
+};
 
 // 이벤트 리스너
 document.addEventListener('DOMContentLoaded', function() {
