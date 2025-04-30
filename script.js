@@ -1,4 +1,6 @@
 import { getData } from './js/firebase-config.js';
+import { ref, get } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+import { db } from './js/firebase-config.js';
 
 // 전역 변수
 let currentSlide = 0;
@@ -150,19 +152,17 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// 데이터 읽기 예시
-async function loadTestData() {
-  try {
-    const value = await getData("test");
-    if (value) {
-      document.body.insertAdjacentHTML("afterbegin", `<h2>Firebase: ${value}</h2>`);
-    } else {
-      document.body.insertAdjacentHTML("afterbegin", `<h2>데이터 없음</h2>`);
-    }
-  } catch (error) {
-    console.error("에러:", error);
+// Firebase 데이터 읽기
+const dbRef = ref(db, "test");
+get(dbRef).then((snapshot) => {
+  const value = snapshot.val();
+  const outputEl = document.getElementById("firebase-output");
+  if (value) {
+    outputEl.innerText = `Firebase: ${value}`;
+  } else {
+    outputEl.innerText = "";  // 데이터 없을 땐 아무것도 출력 안 함
   }
-}
+});
 
 // 페이지 로드 시 데이터 불러오기
 document.addEventListener('DOMContentLoaded', loadTestData); 
