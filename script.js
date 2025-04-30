@@ -3,6 +3,13 @@ let currentSlide = 0;
 
 console.log('script.js 로드됨');
 
+// Google 로그인 함수
+window.loginWithGoogle = function() {
+  console.log('Google 로그인 시도');
+  // Google 로그인 로직을 여기에 구현
+  alert('Google 로그인 기능이 준비 중입니다.');
+};
+
 // 전역 함수 정의
 window.toggleProducts = function(card, type) {
   console.log('toggleProducts 호출됨:', type);
