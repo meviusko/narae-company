@@ -69,5 +69,22 @@
 </div>
 
 <script type="module" src="script.js"></script>
+<script>
+  // 전역 함수들이 로드되었는지 확인
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof window.toggleProducts === 'undefined') {
+      console.error('toggleProducts 함수가 정의되지 않았습니다.');
+    }
+    if (typeof window.openModal === 'undefined') {
+      console.error('openModal 함수가 정의되지 않았습니다.');
+    }
+    if (typeof window.closeModal === 'undefined') {
+      console.error('closeModal 함수가 정의되지 않았습니다.');
+    }
+    if (typeof window.goHome === 'undefined') {
+      console.error('goHome 함수가 정의되지 않았습니다.');
+    }
+  });
+</script>
 </body>
 </html>
