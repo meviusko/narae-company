@@ -207,5 +207,8 @@ get(dbRef).then((snapshot) => {
   console.error("Firebase 데이터 가져오기 실패:", error);
 });
 
-// 페이지 로드 시 데이터 불러오기
-document.addEventListener('DOMContentLoaded', loadTestData); 
+// 전역 함수들을 window 객체에 등록
+window.toggleProducts = toggleProducts;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.goHome = goHome; 
