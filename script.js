@@ -26,7 +26,7 @@ let currentSlide = 0;
 console.log('script.js 로드됨');
 
 // 전역 함수 정의
-window.toggleProducts = function(card, type) {
+function toggleProducts(card, type) {
   console.log('toggleProducts 호출됨:', type);
   const existingGrid = card.nextElementSibling;
   
@@ -75,9 +75,9 @@ window.toggleProducts = function(card, type) {
 
   grid.innerHTML = html;
   card.after(grid);
-};
+}
 
-window.openModal = function(imgSrc, title, price) {
+function openModal(imgSrc, title, price) {
   console.log('openModal 호출됨:', title);
   const modal = document.getElementById('productModal');
   const modalImg = document.getElementById('modalImage');
@@ -119,31 +119,39 @@ window.openModal = function(imgSrc, title, price) {
   }
   
   modal.style.display = 'block';
-};
+}
 
-window.closeModal = function() {
+function closeModal() {
   console.log('closeModal 호출됨');
   const modal = document.getElementById('productModal');
   modal.style.display = 'none';
-};
+}
 
-window.goHome = function() {
+function goHome() {
   console.log('goHome 호출됨');
   closeModal();
   window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+}
 
-window.showLoginForm = function() {
+function showLoginForm() {
   console.log('showLoginForm 호출됨');
   const modal = document.getElementById('loginModal');
   modal.style.display = 'flex';
-};
+}
 
-window.hideLoginForm = function() {
+function hideLoginForm() {
   console.log('hideLoginForm 호출됨');
   const modal = document.getElementById('loginModal');
   modal.style.display = 'none';
-};
+}
+
+// 전역 함수들을 window 객체에 등록
+window.toggleProducts = toggleProducts;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.goHome = goHome;
+window.showLoginForm = showLoginForm;
+window.hideLoginForm = hideLoginForm;
 
 // 이벤트 리스너
 document.addEventListener('DOMContentLoaded', function() {
