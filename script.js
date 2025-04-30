@@ -25,122 +25,130 @@ let currentSlide = 0;
 
 console.log('script.js 로드됨');
 
-// 전역 함수들을 window 객체에 등록
-window.showLoginForm = function() {
-  console.log('showLoginForm 호출됨');
-  const modal = document.getElementById('loginModal');
-  modal.style.display = 'flex';
-}
-
-window.hideLoginForm = function() {
-  console.log('hideLoginForm 호출됨');
-  const modal = document.getElementById('loginModal');
-  modal.style.display = 'none';
-}
-
-// 전역 함수 정의
-function toggleProducts(card, type) {
-  const existingGrid = card.nextElementSibling;
-  
-  if (existingGrid && existingGrid.classList.contains('product-grid')) {
-    existingGrid.remove();
-    return;
-  }
-
-  const grid = document.createElement('div');
-  grid.className = 'product-grid';
-
-  let html = "";
-
-  if (type === 'melaxin') {
-    const products = [
-      { img: 'img/206444_410774_554-removebg-preview.png', name: 'BonDex Clinic', price: '98,800원' },
-      { img: 'img/6128d637a82c2c472bba840d58a7c788-removebg-preview.png', name: 'EyePhalt', price: '99,000원' },
-      { img: 'img/dr.melaxin_cemenrete.png', name: 'Cemenrete', price: '' },
-      { img: 'img/dr.melaxin_astaxanthin.png', name: 'Astaxanthin', price: '' },
-      { img: 'img/dr.melaxin_dubai_peptide.png', name: 'Dubai Peptide', price: '' }
-    ];
-
-    products.forEach((p) => {
-      html += `
-      <div class="product-card">
-        <img src="${p.img}" alt="${p.name}">
-        <div class="product-title">
-          <span class="product-name">${p.name}</span>
-          <span class="product-price">${p.price}</span>
-        </div>
-        <p class="view-toggle" onclick="openModal('${p.img}', '${p.name}', '${p.price}')">View</p>
-      </div>`;
-    });
-  } else {
-    for (let i = 0; i < 2; i++) {
-      html += `
-      <div class="product-card">
-        <img src="img/nr_logo.png" alt="Coming Soon">
-        <div class="product-title">
-          <span class="product-name">Coming Soon</span>
-          <span class="product-price"></span>
-        </div>
-      </div>`;
+// 전역 함수들을 즉시 실행되는 함수로 감싸서 정의
+(function() {
+  // 전역 함수 정의
+  function toggleProducts(card, type) {
+    const existingGrid = card.nextElementSibling;
+    
+    if (existingGrid && existingGrid.classList.contains('product-grid')) {
+      existingGrid.remove();
+      return;
     }
+
+    const grid = document.createElement('div');
+    grid.className = 'product-grid';
+
+    let html = "";
+
+    if (type === 'melaxin') {
+      const products = [
+        { img: 'img/206444_410774_554-removebg-preview.png', name: 'BonDex Clinic', price: '98,800원' },
+        { img: 'img/6128d637a82c2c472bba840d58a7c788-removebg-preview.png', name: 'EyePhalt', price: '99,000원' },
+        { img: 'img/dr.melaxin_cemenrete.png', name: 'Cemenrete', price: '' },
+        { img: 'img/dr.melaxin_astaxanthin.png', name: 'Astaxanthin', price: '' },
+        { img: 'img/dr.melaxin_dubai_peptide.png', name: 'Dubai Peptide', price: '' }
+      ];
+
+      products.forEach((p) => {
+        html += `
+        <div class="product-card">
+          <img src="${p.img}" alt="${p.name}">
+          <div class="product-title">
+            <span class="product-name">${p.name}</span>
+            <span class="product-price">${p.price}</span>
+          </div>
+          <p class="view-toggle" onclick="openModal('${p.img}', '${p.name}', '${p.price}')">View</p>
+        </div>`;
+      });
+    } else {
+      for (let i = 0; i < 2; i++) {
+        html += `
+        <div class="product-card">
+          <img src="img/nr_logo.png" alt="Coming Soon">
+          <div class="product-title">
+            <span class="product-name">Coming Soon</span>
+            <span class="product-price"></span>
+          </div>
+        </div>`;
+      }
+    }
+
+    grid.innerHTML = html;
+    card.after(grid);
   }
 
-  grid.innerHTML = html;
-  card.after(grid);
-}
-
-function openModal(imgSrc, title, price) {
-  const modal = document.getElementById('productModal');
-  const modalImg = document.getElementById('modalImage');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalPrice = document.getElementById('modalPrice');
-  const modalDescription = document.getElementById('modalDescription');
-  
-  history.pushState({ modal: true }, '', window.location.href);
-  
-  modalImg.src = imgSrc;
-  modalTitle.textContent = title;
-  modalPrice.textContent = price;
-  
-  if (title === 'BonDex Clinic') {
-    modalDescription.style.display = 'block';
-    modalDescription.innerHTML = `
-      <p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
-      <ul>
-        <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
-        <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
-        <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
-        <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
-        <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
-        <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
-      </ul>`;
-  } else if (title === 'EyePhalt') {
-    modalDescription.style.display = 'block';
-    modalDescription.innerHTML = `
-      <p>[Нүд орчмын бүх асуудлын шийдэл, нүдний доорх хавангийн эзэлхүүнийг дээшлүүлэх эмнэлзүйн туршилт амжилттай]</p>
-      <ul>
-        <li>Арьсны липидтэй төстэй ВАСОМ ретинол агуулсан, будалтын дор хальцарч, гулгахгүй ZERO</li>
-        <li>Өдөрт хоёр удаа, тэлсэн төлөвт арчлах Day&Night хос өргөх шийдэл</li>
-        <li>Зөвхөн 1 удаагийн хэрэглээгээр нүдний доорх хавангийн эзэлхүүн хамгийн ихдээ 156.67% сайжирсан</li>
-        <li>Зөвхөн 1 удаагийн хэрэглээгээр үрчлээ хамгийн ихдээ 121.32% сайжирсан</li>
-        <li>Арьсны цочролын тест амжилттай дууссан</li>
-      </ul>`;
-  } else {
-    modalDescription.style.display = 'none';
+  function openModal(imgSrc, title, price) {
+    const modal = document.getElementById('productModal');
+    const modalImg = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalDescription = document.getElementById('modalDescription');
+    
+    history.pushState({ modal: true }, '', window.location.href);
+    
+    modalImg.src = imgSrc;
+    modalTitle.textContent = title;
+    modalPrice.textContent = price;
+    
+    if (title === 'BonDex Clinic') {
+      modalDescription.style.display = 'block';
+      modalDescription.innerHTML = `
+        <p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
+        <ul>
+          <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
+          <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
+          <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
+          <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
+          <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
+          <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
+        </ul>`;
+    } else if (title === 'EyePhalt') {
+      modalDescription.style.display = 'block';
+      modalDescription.innerHTML = `
+        <p>[Нүд орчмын бүх асуудлын шийдэл, нүдний доорх хавангийн эзэлхүүнийг дээшлүүлэх эмнэлзүйн туршилт амжилттай]</p>
+        <ul>
+          <li>Арьсны липидтэй төстэй ВАСОМ ретинол агуулсан, будалтын дор хальцарч, гулгахгүй ZERO</li>
+          <li>Өдөрт хоёр удаа, тэлсэн төлөвт арчлах Day&Night хос өргөх шийдэл</li>
+          <li>Зөвхөн 1 удаагийн хэрэглээгээр нүдний доорх хавангийн эзэлхүүн хамгийн ихдээ 156.67% сайжирсан</li>
+          <li>Зөвхөн 1 удаагийн хэрэглээгээр үрчлээ хамгийн ихдээ 121.32% сайжирсан</li>
+          <li>Арьсны цочролын тест амжилттай дууссан</li>
+        </ul>`;
+    } else {
+      modalDescription.style.display = 'none';
+    }
+    
+    modal.style.display = 'block';
   }
-  
-  modal.style.display = 'block';
-}
 
-function closeModal() {
-  const modal = document.getElementById('productModal');
-  modal.style.display = 'none';
-}
+  function closeModal() {
+    const modal = document.getElementById('productModal');
+    modal.style.display = 'none';
+  }
 
-function goHome() {
-  closeModal();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+  function goHome() {
+    closeModal();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showLoginForm() {
+    const modal = document.getElementById('loginModal');
+    modal.style.display = 'flex';
+  }
+
+  function hideLoginForm() {
+    const modal = document.getElementById('loginModal');
+    modal.style.display = 'none';
+  }
+
+  // 전역 함수들을 window 객체에 등록
+  window.toggleProducts = toggleProducts;
+  window.openModal = openModal;
+  window.closeModal = closeModal;
+  window.goHome = goHome;
+  window.showLoginForm = showLoginForm;
+  window.hideLoginForm = hideLoginForm;
+})();
 
 // 이벤트 리스너
 document.addEventListener('DOMContentLoaded', function() {
@@ -182,10 +190,4 @@ get(dbRef).then((snapshot) => {
   }
 }).catch((error) => {
   console.error("Firebase 데이터 가져오기 실패:", error);
-});
-
-// 전역 함수들을 window 객체에 등록
-window.toggleProducts = toggleProducts;
-window.openModal = openModal;
-window.closeModal = closeModal;
-window.goHome = goHome; 
+}); 
