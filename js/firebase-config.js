@@ -1,7 +1,7 @@
 // Firebase SDK import
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 
 // Firebase 설정
 const firebaseConfig = {
