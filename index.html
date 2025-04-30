@@ -70,11 +70,10 @@
   </div>
 </div>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js"></script>
-
+<script src="firebase-app.js"></script>
+<script src="firebase-analytics.js"></script>
+<script src="firebase-database.js"></script>
+<script src="firebase.js"></script>
 <script>
   // Firebase 설정
   const firebaseConfig = {
@@ -89,12 +88,12 @@
   };
 
   // 초기화
-  const app = firebase.initializeApp(firebaseConfig);
-  const analytics = firebase.analytics(app);
-  const db = firebase.database(app);
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  const db = firebase.database();
 
   // Firebase 데이터 읽기
-  const dbRef = firebase.database().ref("test");
+  const dbRef = db.ref("test");
   dbRef.once('value').then((snapshot) => {
     const value = snapshot.val();
     const outputEl = document.getElementById("firebase-output");
@@ -109,7 +108,6 @@
     console.error("Firebase 데이터 가져오기 실패:", error);
   });
 </script>
-<script src="firebase.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
