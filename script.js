@@ -196,14 +196,15 @@ const dbRef = ref(db, "test");
 get(dbRef).then((snapshot) => {
   const value = snapshot.val();
   const outputEl = document.getElementById("firebase-output");
-  if (value) {
-    outputEl.innerText = `Firebase: ${value}`;
-  } else {
-    outputEl.innerText = "";  // 데이터 없을 땐 아무것도 출력 안 함
+  if (outputEl) {
+    if (value) {
+      outputEl.innerText = `Firebase: ${value}`;
+    } else {
+      outputEl.innerText = "";  // 데이터 없을 땐 아무것도 출력 안 함
+    }
   }
 }).catch((error) => {
   console.error("Firebase 데이터 가져오기 실패:", error);
-  document.getElementById("firebase-output").innerText = "";
 });
 
 // 페이지 로드 시 데이터 불러오기
