@@ -38,28 +38,21 @@ window.hideLoginForm = function() {
   modal.style.display = 'none';
 }
 
-// 제품 관련 함수
-window.toggleProducts = function(card, type) {
-  console.log('toggleProducts 호출됨:', type);
-  console.log('Card element:', card);
-  
+// 전역 함수 정의
+function toggleProducts(card, type) {
   const existingGrid = card.nextElementSibling;
-  console.log('Existing grid:', existingGrid);
-
+  
   if (existingGrid && existingGrid.classList.contains('product-grid')) {
-    console.log('Removing existing grid');
     existingGrid.remove();
     return;
   }
 
   const grid = document.createElement('div');
   grid.className = 'product-grid';
-  console.log('Created new grid');
 
   let html = "";
 
   if (type === 'melaxin') {
-    console.log('Creating melaxin products');
     const products = [
       { img: 'img/206444_410774_554-removebg-preview.png', name: 'BonDex Clinic', price: '98,800원' },
       { img: 'img/6128d637a82c2c472bba840d58a7c788-removebg-preview.png', name: 'EyePhalt', price: '99,000원' },
@@ -69,7 +62,6 @@ window.toggleProducts = function(card, type) {
     ];
 
     products.forEach((p) => {
-      console.log('Adding product:', p.name);
       html += `
       <div class="product-card">
         <img src="${p.img}" alt="${p.name}">
@@ -81,7 +73,6 @@ window.toggleProducts = function(card, type) {
       </div>`;
     });
   } else {
-    console.log('Creating coming soon products');
     for (let i = 0; i < 2; i++) {
       html += `
       <div class="product-card">
@@ -96,10 +87,9 @@ window.toggleProducts = function(card, type) {
 
   grid.innerHTML = html;
   card.after(grid);
-  console.log('Grid added to DOM');
 }
 
-window.openModal = function(imgSrc, title, price) {
+function openModal(imgSrc, title, price) {
   const modal = document.getElementById('productModal');
   const modalImg = document.getElementById('modalImage');
   const modalTitle = document.getElementById('modalTitle');
@@ -112,7 +102,6 @@ window.openModal = function(imgSrc, title, price) {
   modalTitle.textContent = title;
   modalPrice.textContent = price;
   
-  // 제품 설명 추가
   if (title === 'BonDex Clinic') {
     modalDescription.style.display = 'block';
     modalDescription.innerHTML = `
@@ -143,24 +132,12 @@ window.openModal = function(imgSrc, title, price) {
   modal.style.display = 'block';
 }
 
-window.showSlide = function(index) {
-  const images = document.querySelectorAll('.modal-image');
-  const dots = document.querySelectorAll('.slider-dot');
-  if (index < 0) index = images.length - 1;
-  if (index >= images.length) index = 0;
-  images.forEach(img => img.classList.remove('active'));
-  dots.forEach(dot => dot.classList.remove('active'));
-  images[index].classList.add('active');
-  dots[index].classList.add('active');
-  currentSlide = index;
-}
-
-window.closeModal = function() {
+function closeModal() {
   const modal = document.getElementById('productModal');
   modal.style.display = 'none';
 }
 
-window.goHome = function() {
+function goHome() {
   closeModal();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
