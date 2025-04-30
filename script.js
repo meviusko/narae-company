@@ -29,6 +29,7 @@ console.log('script.js 로드됨');
 (function() {
   // 전역 함수 정의
   function toggleProducts(card, type) {
+    console.log('toggleProducts 호출됨:', type);
     const existingGrid = card.nextElementSibling;
     
     if (existingGrid && existingGrid.classList.contains('product-grid')) {
@@ -79,6 +80,7 @@ console.log('script.js 로드됨');
   }
 
   function openModal(imgSrc, title, price) {
+    console.log('openModal 호출됨:', title);
     const modal = document.getElementById('productModal');
     const modalImg = document.getElementById('modalImage');
     const modalTitle = document.getElementById('modalTitle');
@@ -122,21 +124,25 @@ console.log('script.js 로드됨');
   }
 
   function closeModal() {
+    console.log('closeModal 호출됨');
     const modal = document.getElementById('productModal');
     modal.style.display = 'none';
   }
 
   function goHome() {
+    console.log('goHome 호출됨');
     closeModal();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function showLoginForm() {
+    console.log('showLoginForm 호출됨');
     const modal = document.getElementById('loginModal');
     modal.style.display = 'flex';
   }
 
   function hideLoginForm() {
+    console.log('hideLoginForm 호출됨');
     const modal = document.getElementById('loginModal');
     modal.style.display = 'none';
   }
