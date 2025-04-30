@@ -86,21 +86,42 @@ window.openModal = function(imgSrc, title, price) {
   const modalImg = document.getElementById('modalImage');
   const modalTitle = document.getElementById('modalTitle');
   const modalPrice = document.getElementById('modalPrice');
+  const modalDescription = document.getElementById('modalDescription');
   
   history.pushState({ modal: true }, '', window.location.href);
   
+  modalImg.src = imgSrc;
+  modalTitle.textContent = title;
+  modalPrice.textContent = price;
+  
+  // 제품 설명 추가
   if (title === 'BonDex Clinic') {
-    modalImg.src = 'img/s1.png';
-    modalPrice.textContent = '98,800원';
+    modalDescription.style.display = 'block';
+    modalDescription.innerHTML = `
+      <p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
+      <ul>
+        <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
+        <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
+        <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
+        <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
+        <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
+        <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
+      </ul>`;
   } else if (title === 'EyePhalt') {
-    modalImg.src = 'img/a1.png';
-    modalPrice.textContent = '99,000원';
+    modalDescription.style.display = 'block';
+    modalDescription.innerHTML = `
+      <p>[Нүд орчмын бүх асуудлын шийдэл, нүдний доорх хавангийн эзэлхүүнийг дээшлүүлэх эмнэлзүйн туршилт амжилттай]</p>
+      <ul>
+        <li>Арьсны липидтэй төстэй ВАСОМ ретинол агуулсан, будалтын дор хальцарч, гулгахгүй ZERO</li>
+        <li>Өдөрт хоёр удаа, тэлсэн төлөвт арчлах Day&Night хос өргөх шийдэл</li>
+        <li>Зөвхөн 1 удаагийн хэрэглээгээр нүдний доорх хавангийн эзэлхүүн хамгийн ихдээ 156.67% сайжирсан</li>
+        <li>Зөвхөн 1 удаагийн хэрэглээгээр үрчлээ хамгийн ихдээ 121.32% сайжирсан</li>
+        <li>Арьсны цочролын тест амжилттай дууссан</li>
+      </ul>`;
   } else {
-    modalImg.src = imgSrc;
-    modalPrice.textContent = price;
+    modalDescription.style.display = 'none';
   }
   
-  modalTitle.textContent = title;
   modal.style.display = 'block';
 }
 
