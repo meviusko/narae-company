@@ -70,10 +70,10 @@
   </div>
 </div>
 
-<!-- Firebase SDK CDN -->
-<script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js"></script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
 <script>
   // Firebase 설정
@@ -88,9 +88,9 @@
     measurementId: "G-105X4NDLJ8"
   };
 
-  // 초기화
+  // Firebase 초기화
   firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+  const analytics = firebase.analytics();
   const db = firebase.database();
 
   // Firebase 데이터 읽기
@@ -109,6 +109,7 @@
     console.error("Firebase 데이터 가져오기 실패:", error);
   });
 </script>
+
 <script src="script.js"></script>
 </body>
 </html>
