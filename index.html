@@ -57,118 +57,16 @@
   <div class="modal-content">
     <div class="modal-header">
       <img src="img/nr_logo.png" alt="로고" class="modal-logo" onclick="goHome()">
+      <button class="close-btn" onclick="closeModal()">×</button>
     </div>
     <div class="modal-body">
-      <div class="modal-image-container" id="modalImageContainer">
-        <img class="modal-image active" id="modalImage1" src="img/s1.png" alt="샴푸 이미지1">
-        <img class="modal-image" id="modalImage2" src="img/s2.png" alt="샴푸 이미지2">
-        <img class="modal-image" id="modalImage3" src="img/s3.png" alt="샴푸 이미지3">
-      </div>
-      <div class="modal-slider-dots">
-        <span class="slider-dot active" onclick="showSlide(0)"></span>
-        <span class="slider-dot" onclick="showSlide(1)"></span>
-        <span class="slider-dot" onclick="showSlide(2)"></span>
-      </div>
-      <h3 class="modal-image-title" id="modalTitle"></h3>
-      <div class="modal-description" id="modalDescription">
-        <p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
-        <ul>
-          <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
-          <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
-          <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
-          <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
-          <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
-          <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
-        </ul>
-        
-        <h4 class="ingredients-title">Бүтээгдэхүүний бүрэн найрлага</h4>
-        
-        <div class="ingredients-section">
-          <h5>[Шампунь]</h5>
-          <p>Цэвэршүүлсэн ус, Натрийн лаурет сульфат, Аммонийн лаурил сульфат, Кокамидопропил бетаин, Кокамид метил МЭА, Анхилуун үнэртэн, Бутиленгликол, Натрийн хлорид, Натрийн бензоат, Цетил спирт, Диметикон, Гуа гидроксипропил триемониум хлорид, Трайгидроксистеарин, Глицерин, Ситрийн хүчил, Лаурил спирт, Динатрийн ЭДТА, Аммонийн сульфат, Этилгексилглицерин, Стрептококкус термофилус исгэлтийн бүтээгдэхүүн, Синтетик флюорфлогопит, Хар овъёосны ханд, Лецитин, Титаны диоксид, Миристил спирт, Стеарил спирт, Кали сорбат, Аргинин, Арганы самрын тос, 1,2-Гександиол, Каприлик/каприк триглицерид, Ус төрөгчжүүлсэн лецитин, Натрийн пальмитоил саркозинат, SH-Олигопептид-78, Лимонен, Линалол, Бензил салицилат, Бензил бензоат</p>
-        </div>
-        
-        <div class="ingredients-section">
-          <h5>[Клиник]</h5>
-          <p>Цэвэршүүлсэн ус, Диметикон, Цетил спирт, Бехентримониум хлорид, Стеарил спирт, Бехентримониум метосульфат, Бутиленгликол, Анхилуун үнэртэн, Өөрчлөгдсөн спирт, Стеаратримониум хлорид, Амодиметикон, Пропиленгликол, Каприллилгликол, Этилгексилглицерин, Глутамины хүчил, Динатрийн ЭДТА, Стрептококкус термофилус исгэлтийн бүтээгдэхүүн, Наранцэцгийн үрийн тос, 1,2-Гександиол, Миристил спирт, Бета-каротин, Арганы самрын тос, Гидролизжүүлсэн арвайн уураг (1,000ppb), Каприлик/каприк триглицерид, Ус төрөгчжүүлсэн лецитин, Натрийн пальмитоил саркозинат, SH-Олигопептид-78, Лимонен, Линалол, Бензил салицилат, Бензил бензоат</p>
-        </div>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="modal-btn buy" onclick="alert('구매하기 기능은 추후 구현됩니다.')">구매하기</button>
-      <button class="modal-btn cart" onclick="alert('장바구니 기능은 추후 구현됩니다.')">장바구니</button>
+      <img class="modal-image" id="modalImage" src="" alt="제품 이미지">
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <p class="modal-price" id="modalPrice"></p>
     </div>
   </div>
 </div>
 
-<script type="module">
-  // Firebase 모듈 import
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-
-  // Firebase 설정
-  const firebaseConfig = {
-    apiKey: "AIzaSyB00VqMZrAMXtD5K1gH6P-cvj36Hl0ibus",
-    authDomain: "nrcopany.firebaseapp.com",
-    projectId: "nrcopany",
-    storageBucket: "nrcopany.firebasestorage.app",
-    messagingSenderId: "869162796484",
-    appId: "1:869162796484:web:0cc702d188090aeedc1091",
-    measurementId: "G-105X4NDLJ8"
-  };
-
-  // Firebase 초기화
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
-
-  // 개발 모드에서 테스트하기 위한 설정
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    console.log('개발 모드에서 실행 중');
-    // 개발 모드에서는 모든 도메인에서 인증 허용
-    auth.useEmulator('http://localhost:9099');
-  }
-
-  // Firebase 초기화 확인
-  console.log('Firebase 초기화 완료:', app.name);
-
-  // Google 로그인 함수
-  window.loginWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      console.log('로그인 성공:', user);
-      window.hideLoginForm();
-    } catch (error) {
-      console.error('로그인 실패:', error);
-      console.error('오류 코드:', error.code);
-      console.error('오류 메시지:', error.message);
-      console.error('오류 상세:', error);
-      
-      // 사용자에게 더 자세한 오류 메시지 표시
-      let errorMessage = '로그인에 실패했습니다.\n';
-      if (error.code === 'auth/unauthorized-domain') {
-        errorMessage += '현재 도메인이 Firebase 인증에 등록되어 있지 않습니다.\n';
-        errorMessage += 'Firebase 콘솔에서 도메인을 추가해주세요.';
-      } else {
-        errorMessage += error.message;
-      }
-      alert(errorMessage);
-    }
-  };
-
-  // script.js 로드
-  const script = document.createElement('script');
-  script.src = 'js/script.js';
-  script.onload = () => {
-    console.log('script.js 로드 완료');
-    // 모든 함수가 전역에 등록되었는지 확인
-    console.log('toggleProducts 함수 확인:', typeof window.toggleProducts);
-    console.log('showLoginForm 함수 확인:', typeof window.showLoginForm);
-  };
-  document.body.appendChild(script);
-</script>
+<script type="module" src="script.js"></script>
 </body>
 </html>

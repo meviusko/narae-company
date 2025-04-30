@@ -1,9 +1,11 @@
+import { getData } from './js/firebase-config.js';
+
 // 전역 변수
 let currentSlide = 0;
 
 console.log('script.js 로드됨');
 
-// 로그인 관련 함수
+// 전역 함수들을 window 객체에 등록
 window.showLoginForm = function() {
   console.log('showLoginForm 호출됨');
   const modal = document.getElementById('loginModal');
@@ -39,18 +41,8 @@ window.toggleProducts = function(card, type) {
   if (type === 'melaxin') {
     console.log('Creating melaxin products');
     const products = [
-      { 
-        img: 'img/206444_410774_554-removebg-preview.png', 
-        name: 'BonDex Clinic', 
-        originalPrice: 'Борлуулалтын үнэ 98,800 вон',
-        discountPrice: 'Хямдралтай үнэ 39,800 вон'
-      },
-      { 
-        img: 'img/6128d637a82c2c472bba840d58a7c788-removebg-preview.png', 
-        name: 'EyePhalt', 
-        originalPrice: 'Борлуулалтын үнэ 99,000 вон',
-        discountPrice: 'Хямдралтай үнэ 59,000 вон'
-      },
+      { img: 'img/206444_410774_554-removebg-preview.png', name: 'BonDex Clinic', price: '98,800원' },
+      { img: 'img/6128d637a82c2c472bba840d58a7c788-removebg-preview.png', name: 'EyePhalt', price: '99,000원' },
       { img: 'img/dr.melaxin_cemenrete.png', name: 'Cemenrete', price: '' },
       { img: 'img/dr.melaxin_astaxanthin.png', name: 'Astaxanthin', price: '' },
       { img: 'img/dr.melaxin_dubai_peptide.png', name: 'Dubai Peptide', price: '' }
@@ -63,9 +55,9 @@ window.toggleProducts = function(card, type) {
         <img src="${p.img}" alt="${p.name}">
         <div class="product-title">
           <span class="product-name">${p.name}</span>
-          <span class="product-price">${p.price || ''}</span>
+          <span class="product-price">${p.price}</span>
         </div>
-        <p class="view-toggle" onclick="openModal('${p.img}', '${p.name}', '${p.originalPrice || ''}', '${p.discountPrice || ''}')">View</p>
+        <p class="view-toggle" onclick="openModal('${p.img}', '${p.name}', '${p.price}')">View</p>
       </div>`;
     });
   } else {
@@ -87,40 +79,23 @@ window.toggleProducts = function(card, type) {
   console.log('Grid added to DOM');
 }
 
-window.openModal = function(imgSrc, title, originalPrice, discountPrice) {
+window.openModal = function(imgSrc, title, price) {
   const modal = document.getElementById('productModal');
-  const modalImg1 = document.getElementById('modalImage1');
-  const modalImg2 = document.getElementById('modalImage2');
-  const modalImg3 = document.getElementById('modalImage3');
+  const modalImg = document.getElementById('modalImage');
   const modalTitle = document.getElementById('modalTitle');
-  const modalDescription = document.getElementById('modalDescription');
+  const modalPrice = document.getElementById('modalPrice');
   
   history.pushState({ modal: true }, '', window.location.href);
   
   if (title === 'BonDex Clinic') {
-    modalImg1.src = 'img/s1.png';
-    modalImg2.src = 'img/s2.png';
-    modalImg3.src = 'img/s3.png';
-    modalDescription.style.display = 'block';
+    modalImg.src = 'img/s1.png';
+    modalPrice.textContent = '98,800원';
   } else if (title === 'EyePhalt') {
-    modalImg1.src = 'img/a1.png';
-    modalImg2.src = 'img/a2.png';
-    modalImg3.src = 'img/a3.png';
-    modalDescription.style.display = 'block';
-    modalDescription.innerHTML = `
-      <p>[Нүд орчмын бүх асуудлын шийдэл, нүдний доорх хавангийн эзэлхүүнийг дээшлүүлэх эмнэлзүйн туршилт амжилттай]</p>
-      <ul>
-        <li>Арьсны липидтэй төстэй ВАСОМ ретинол агуулсан, будалтын дор хальцарч, гулгахгүй ZERO</li>
-        <li>Өдөрт хоёр удаа, тэлсэн төлөвт арчлах Day&Night хос өргөх шийдэл</li>
-        <li>Зөвхөн 1 удаагийн хэрэглээгээр нүдний доорх хавангийн эзэлхүүн хамгийн ихдээ 156.67% сайжирсан</li>
-        <li>Зөвхөн 1 удаагийн хэрэглээгээр үрчлээ хамгийн ихдээ 121.32% сайжирсан</li>
-        <li>Арьсны цочролын тест амжилттай дууссан</li>
-      </ul>`;
+    modalImg.src = 'img/a1.png';
+    modalPrice.textContent = '99,000원';
   } else {
-    modalImg1.src = imgSrc;
-    modalImg2.src = '';
-    modalImg3.src = '';
-    modalDescription.style.display = 'none';
+    modalImg.src = imgSrc;
+    modalPrice.textContent = price;
   }
   
   modalTitle.textContent = title;
@@ -173,4 +148,21 @@ document.addEventListener('DOMContentLoaded', function() {
       hideLoginForm();
     }
   });
-}); 
+});
+
+// 데이터 읽기 예시
+async function loadTestData() {
+  try {
+    const value = await getData("test");
+    if (value) {
+      document.body.insertAdjacentHTML("afterbegin", `<h2>Firebase: ${value}</h2>`);
+    } else {
+      document.body.insertAdjacentHTML("afterbegin", `<h2>데이터 없음</h2>`);
+    }
+  } catch (error) {
+    console.error("에러:", error);
+  }
+}
+
+// 페이지 로드 시 데이터 불러오기
+document.addEventListener('DOMContentLoaded', loadTestData); 
