@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>최종 View버튼수정버전</title>
+<link rel="icon" type="image/x-icon" href="img/nr_logo.png">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -108,6 +109,16 @@
   }).catch((error) => {
     console.error("Firebase 데이터 가져오기 실패:", error);
   });
+</script>
+
+<script>
+  // 전역 함수들을 미리 선언
+  window.toggleProducts = function() {};
+  window.openModal = function() {};
+  window.closeModal = function() {};
+  window.goHome = function() {};
+  window.showLoginForm = function() {};
+  window.hideLoginForm = function() {};
 </script>
 
 <script src="script.js"></script>
