@@ -41,7 +41,14 @@ window.loginWithGoogle = async function() {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    console.log("Google 로그인 성공:", user);
+        // 사용자 정보 저장
+    await set(ref(database, "users/" + user.uid), {
+      name: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+      createdAt: new Date().toISOString()
+    });
+console.log("Google 로그인 성공:", user);
     alert("Google 로그인 성공!");
     hideLoginForm();
   } catch (error) {
