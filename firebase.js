@@ -9,7 +9,8 @@ const firebaseConfig = {
   apiKey: "AIzaSyB00VqMZrAMXtD5K1gH6P-cvj36Hl0ibus",
   authDomain: "nrcopany.firebaseapp.com",
   projectId: "nrcopany",
-  storageBucket: "nrcopany.firebasestorage.app",
+  databaseURL: "https://nrcopany-default-rtdb.firebaseio.com",
+  storageBucket: "nrcopany.appspot.com",
   messagingSenderId: "869162796484",
   appId: "1:869162796484:web:0cc702d188090aeedc1091",
   measurementId: "G-105X4NDLJ8"
