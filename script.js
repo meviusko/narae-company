@@ -29,37 +29,28 @@ window.toggleProducts = function(card, type) {
       { 
         img: 'img/206444_410774_554-removebg-preview.png', 
         name: 'BonDex Clinic', 
-        price: '98,800원',
-        images: [
-          'img/bondex1.jpg',
-          'img/bondex2.jpg',
-          'img/bondex3.jpg'
-        ],
-        description: `<p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
-        <ul>
-          <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
-          <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
-          <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
-          <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
-          <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
-          <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
-        </ul>`
+        originalPrice: 'Борлуулалтын үнэ 98,800 вон',
+        discountPrice: 'Хямдралтай үнэ 39,800 вон'
       },
-      { img: 'img/6128d637a82c2c472bba840d58a7c788-removebg-preview.png', name: 'EyePhalt', price: '99,000원' },
+      { 
+        img: 'img/6128d637a82c2c472bba840d58a7c788-removebg-preview.png', 
+        name: 'EyePhalt', 
+        originalPrice: 'Борлуулалтын үнэ 99,000 вон',
+        discountPrice: 'Хямдралтай үнэ 59,000 вон'
+      },
       { img: 'img/dr.melaxin_cemenrete.png', name: 'Cemenrete', price: '' },
       { img: 'img/dr.melaxin_astaxanthin.png', name: 'Astaxanthin', price: '' },
       { img: 'img/dr.melaxin_dubai_peptide.png', name: 'Dubai Peptide', price: '' }
     ];
-
     products.forEach((p) => {
       html += `
       <div class="product-card">
         <img src="${p.img}" alt="${p.name}">
         <div class="product-title">
           <span class="product-name">${p.name}</span>
-          <span class="product-price">${p.price}</span>
+          <span class="product-price">${p.price || ''}</span>
         </div>
-        <button class="view-toggle" onclick="openModal('${p.name}', '${p.img}', '${p.price}', ${JSON.stringify(p.description || '')}, ${JSON.stringify(p.images || [])})">View</button>
+        <p class="view-toggle" onclick="openModal('${p.img}', '${p.name}', '${p.originalPrice || ''}', '${p.discountPrice || ''}')">View</p>
       </div>`;
     });
   } else {
@@ -79,54 +70,81 @@ window.toggleProducts = function(card, type) {
   card.after(grid);
 };
 
-window.openModal = function(title, imgSrc, price, description, images = []) {
+window.openModal = function(imgSrc, title, originalPrice, discountPrice) {
   console.log('openModal 호출됨:', title);
   const modal = document.getElementById('productModal');
   const modalImg1 = document.getElementById('modalImage1');
   const modalImg2 = document.getElementById('modalImage2');
   const modalImg3 = document.getElementById('modalImage3');
   const modalTitle = document.getElementById('modalTitle');
-  const modalPriceInfo = document.getElementById('modalPriceInfo');
   const modalDescription = document.getElementById('modalDescription');
   
   history.pushState({ modal: true }, '', window.location.href);
   
-  if (title === 'BonDex Clinic' && images && images.length > 0) {
-    modalImg1.src = images[0];
-    modalImg2.src = images[1];
-    modalImg3.src = images[2];
-    modalImg1.classList.add('active');
-    modalImg2.classList.remove('active');
-    modalImg3.classList.remove('active');
-    currentSlide = 0;
-    updateSliderDots();
+  if (title === 'BonDex Clinic') {
+    modalImg1.src = 'img/s1.png';
+    modalImg2.src = 'img/s2.png';
+    modalImg3.src = 'img/s3.png';
+    modalDescription.style.display = 'block';
+  } else if (title === 'EyePhalt') {
+    modalImg1.src = 'img/a1.png';
+    modalImg2.src = 'img/a2.png';
+    modalImg3.src = 'img/a3.png';
+    modalDescription.style.display = 'block';
+    modalDescription.innerHTML = `
+      <p>[Нүд орчмын бүх асуудлын шийдэл, нүдний доорх хавангийн эзэлхүүнийг дээшлүүлэх эмнэлзүйн туршилт амжилттай]</p>
+      <ul>
+        <li>Арьсны липидтэй төстэй ВАСОМ ретинол агуулсан, будалтын дор хальцарч, гулгахгүй ZERO</li>
+        <li>Өдөрт хоёр удаа, тэлсэн төлөвт арчлах Day&Night хос өргөх шийдэл</li>
+        <li>Зөвхөн 1 удаагийн хэрэглээгээр нүдний доорх хавангийн эзэлхүүн хамгийн ихдээ 156.67% сайжирсан</li>
+        <li>Зөвхөн 1 удаагийн хэрэглээгээр үрчлээ хамгийн ихдээ 121.32% сайжирсан</li>
+        <li>Арьсны цочролын тест амжилттай дууссан</li>
+      </ul>
+      
+      <h4 class="ingredients-title">Бүрэн найрлага</h4>
+      <div class="ingredients-section">
+        <p>Цэвэршүүлсэн ус, Триметилпентандиол/Адипийн хүчил/Глицериний кроссполимер, Глицерин, Диметикон, Ниацинамид, Диметикон/Винилдиметиконы кроссполимер, 1,2-Гександиол, VP/VA кополимер, Натрийн акрилат/Натрийн акрилоилдиметилтаурийн кополимер, Изогексадекан, Гидроксипропилметилцеллюлоз, Амодиметикон, Полисорбат 80, Бутиленгликол, Канолын тос, Каприллилгликол, Сорбитан олеат, Этигексилглицерин, C12-14 Сек-Алкез-7, Аденозин, Одой анисын ханд, Пентиленгликол, Макадамийн үрийн тос, Каприлик/Каприк триглицерид, Устөрөгчжүүлсэн фосфатидилхолин, Ретинол, Пропиленгликол, Полисорбат 20, Этилийн спирт, PEG-5 Чаргана үрийн стерол, Рапсын стерол, Цетет-5, Цетет-3, Калийн цетилфосфат, BHT (бутилжуулсан гидрокситолуол), Холестерин, Луувангийн үрийн тос, Лецитин, Натрийн фосфат, SH-Олигопептид-1, Гидролизжүүлсэн далайн хөвд, Токоферил ацетат, Наранцэцгийн үрийн тос, Луувангийн ханд, Бета-каротин, Коллаген, Кофеин, Натрийн гиалуронат, Гидроксипропилтримониум гиалуронат, Натрийн ацетилилсан гиалуронат, Гидролизжүүлсэн гиалуроны хүчил, Гиалуроны хүчил, Натрийн гиалуронатын кроссполимер, Гидролизжүүлсэн натрийн гиалуронат, Калийн гиалуронат, Динатрийн ЭДТА, Анхилуун үнэртэн, Кумарин, Линалол</p>
+      </div>`;
   } else {
     modalImg1.src = imgSrc;
     modalImg2.src = '';
     modalImg3.src = '';
-    modalImg1.classList.add('active');
-    modalImg2.classList.remove('active');
-    modalImg3.classList.remove('active');
+    modalDescription.style.display = 'none';
   }
   
   modalTitle.textContent = title;
   
-  if (price) {
-    modalPriceInfo.innerHTML = `
-      <div class="modal-original-price">
-        <span class="price-number">${price}</span>
-      </div>
-    `;
-  } else {
-    modalPriceInfo.innerHTML = '';
+  // 가격 정보 추가
+  const priceInfo = document.createElement('div');
+  priceInfo.className = 'modal-price-info';
+  if (originalPrice) {
+    const originalPriceDiv = document.createElement('div');
+    originalPriceDiv.className = 'modal-original-price';
+    // 정가 텍스트를 분리하여 숫자 부분만 취소선 적용
+    const priceText = originalPrice.split(' ');
+    originalPriceDiv.innerHTML = priceText.map((word, index) => {
+      if (word.includes('98,800') || word.includes('99,000')) {
+        return `<span class=\"price-number\">${word}</span>`;
+      }
+      return word;
+    }).join(' ');
+    priceInfo.appendChild(originalPriceDiv);
+  }
+  if (discountPrice) {
+    const discountPriceDiv = document.createElement('div');
+    discountPriceDiv.className = 'modal-discount-price';
+    discountPriceDiv.textContent = discountPrice;
+    priceInfo.appendChild(discountPriceDiv);
   }
   
-  if (description) {
-    modalDescription.style.display = 'block';
-    modalDescription.innerHTML = description;
-  } else {
-    modalDescription.style.display = 'none';
+  // 기존 가격 정보가 있다면 제거
+  const existingPriceInfo = modalTitle.nextElementSibling;
+  if (existingPriceInfo && existingPriceInfo.className === 'modal-price-info') {
+    existingPriceInfo.remove();
   }
+  
+  // 새로운 가격 정보 추가
+  modalTitle.after(priceInfo);
   
   modal.style.display = 'block';
 };
@@ -155,8 +173,33 @@ window.hideLoginForm = function() {
   modal.style.display = 'none';
 };
 
-// 이벤트 리스너
+// 이벤트 리스너 한 번만 등록
 document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('productModal');
+  
+  // ESC 키로 모달 닫기
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+  
+  // 모달 외부 클릭시 닫기
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // 모바일 뒤로가기 버튼 처리
+  window.addEventListener('popstate', function(e) {
+    if (modal.style.display === 'block') {
+      e.preventDefault();
+      closeModal();
+      history.pushState(null, '', window.location.href);
+    }
+  });
+
   // 이메일 로그인 폼 제출 처리
   document.getElementById('emailLoginForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -174,12 +217,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // ESC 키로 모달 닫기
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeModal();
-      hideLoginForm();
-    }
+  // 슬라이더 닷 클릭 이벤트
+  document.querySelectorAll('.slider-dot').forEach((dot, index) => {
+    dot.addEventListener('click', () => showSlide(index));
   });
 
   // 터치 이벤트
@@ -193,36 +233,23 @@ document.addEventListener('DOMContentLoaded', function() {
   imageContainer.addEventListener('mousemove', handleDragMove);
   imageContainer.addEventListener('mouseup', handleDragEnd);
   imageContainer.addEventListener('mouseleave', handleDragEnd);
-
-  // 슬라이더 닷 클릭 이벤트
-  document.querySelectorAll('.slider-dot').forEach((dot, index) => {
-    dot.addEventListener('click', () => showSlide(index));
-  });
 });
 
 // 슬라이드 관련 함수들
 function showSlide(index) {
   const images = document.querySelectorAll('.modal-image');
+  const dots = document.querySelectorAll('.slider-dot');
   if (index < 0) index = images.length - 1;
   if (index >= images.length) index = 0;
   images.forEach(img => img.classList.remove('active'));
+  dots.forEach(dot => dot.classList.remove('active'));
   images[index].classList.add('active');
+  dots[index].classList.add('active');
   currentSlide = index;
-  updateSliderDots();
-}
-
-function updateSliderDots() {
-  const dots = document.querySelectorAll('.slider-dot');
-  dots.forEach((dot, index) => {
-    if (index === currentSlide) {
-      dot.classList.add('active');
-    } else {
-      dot.classList.remove('active');
-    }
-  });
 }
 
 // 터치 및 마우스 이벤트 통합
+const imageContainer = document.getElementById('modalImageContainer');
 let startX = 0;
 let isDragging = false;
 

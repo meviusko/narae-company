@@ -1,54 +1,51 @@
 // Firebase SDK import
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 // Firebase 설정
 const firebaseConfig = {
-  apiKey: "AIzaSyB00VqMZrAMXtD5K1gH6P-cvj36Hl0ibus",
-  authDomain: "nrcopany.firebaseapp.com",
-  databaseURL: "https://nrcopany-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "nrcopany",
-  storageBucket: "nrcopany.firebasestorage.app",
-  messagingSenderId: "869162796484",
-  appId: "1:869162796484:web:0cc702d188090aeedc1091",
-  measurementId: "G-105X4NDLJ8"
+  apiKey: "AIzaSyDqQqXqXqXqXqXqXqXqXqXqXqXqXqXqXqXq",
+  authDomain: "narae-company.firebaseapp.com",
+  databaseURL: "https://narae-company-default-rtdb.firebaseio.com",
+  projectId: "narae-company",
+  storageBucket: "narae-company.appspot.com",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abcdefghijklmnopqrstuv",
+  measurementId: "G-ABCDEFGHIJ"
 };
 
 // Firebase 초기화
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const db = getDatabase(app);
+const database = getDatabase(app);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
 
-// Firebase 데이터 읽기
-const dbRef = ref(db, "test");
+// 데이터베이스에서 데이터 읽기
+const dbRef = ref(database, "test");
 get(dbRef).then((snapshot) => {
-  const value = snapshot.val();
-  const outputEl = document.getElementById("firebase-output");
-  if (outputEl) {
-    if (value) {
-      outputEl.innerText = `Firebase: ${value}`;
-    } else {
-      outputEl.innerText = "";  // 데이터 없을 땐 아무것도 출력 안 함
-    }
+  if (snapshot.exists()) {
+    const data = snapshot.val();
+    document.getElementById("firebase-output").innerHTML = JSON.stringify(data);
+  } else {
+    console.log("No data available");
   }
 }).catch((error) => {
-  console.error("Firebase 데이터 가져오기 실패:", error);
+  console.error(error);
 });
 
-// Google 로그인 함수
+// Google 로그인
 window.loginWithGoogle = async function() {
+  const provider = new GoogleAuthProvider();
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    console.log('로그인 성공:', user);
+    console.log("Google 로그인 성공:", user);
+    alert("Google 로그인 성공!");
     hideLoginForm();
-    alert('로그인 성공!');
   } catch (error) {
-    console.error('로그인 실패:', error);
-    alert('로그인 실패: ' + error.message);
+    console.error("Google 로그인 실패:", error);
+    alert("Google 로그인 실패: " + error.message);
   }
 }; 
