@@ -4,10 +4,7 @@ let currentSlide = 0;
 console.log('script.js 로드됨');
 
 // Google 로그인 함수
-window.loginWithGoogle = function() {
-  console.log('Google 로그인 시도');
-  alert('Google 로그인 기능이 준비 중입니다.');
-};
+
 
 // 전역 함수 정의
 window.toggleProducts = function(card, type) {
