@@ -22,8 +22,15 @@ const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const auth = getAuth(app);
 
+// 로그인 상태 확인
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    updateUI(user);
+  }
+});
+
 // 로그인 버튼 클릭 시
-window.loginWithGoogle = async function() {
+window.showLoginForm = async function () {
   const provider = new GoogleAuthProvider();
   try {
     const result = await signInWithPopup(auth, provider);
@@ -38,23 +45,16 @@ window.loginWithGoogle = async function() {
 
     updateUI(user);
   } catch (error) {
-    console.error("Google 로그인 실패:", error);
+    console.error("로그인 실패:", error);
     alert("로그인 실패: " + error.message);
   }
 };
 
-// 로그인 상태 확인
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    updateUI(user);
-  }
-});
-
-// 사용자 정보 UI 업데이트
+// 로그인된 사용자 정보 표시
 function updateUI(user) {
-  const loginBtn = document.getElementById("login-btn");
-  loginBtn.textContent = "MY";
-  loginBtn.onclick = toggleUserInfo;
+  const btn = document.getElementById("login-btn");
+  btn.textContent = "MY";
+  btn.onclick = toggleUserInfo;
 
   document.getElementById("user-name").textContent = `이름: ${user.displayName}`;
   document.getElementById("user-email").textContent = `이메일: ${user.email}`;
