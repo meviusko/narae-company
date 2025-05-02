@@ -1,7 +1,7 @@
 // Firebase SDK import
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 // Firebase 설정
@@ -41,14 +41,7 @@ window.loginWithGoogle = async function() {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-        // 사용자 정보 저장
-    await set(ref(database, "users/" + user.uid), {
-      name: user.displayName,
-      email: user.email,
-      photoURL: user.photoURL,
-      createdAt: new Date().toISOString()
-    });
-console.log("Google 로그인 성공:", user);
+    console.log("Google 로그인 성공:", user);
     alert("Google 로그인 성공!");
     hideLoginForm();
   } catch (error) {
