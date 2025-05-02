@@ -489,7 +489,7 @@
       <img src="img/nr_logo.png" alt="회사 로고">
     </div>
             <div class="nav-buttons">
-                <button id="login-btn" onclick="showLoginForm()">Login</button>
+                
     </div>
   </div>
 
@@ -582,20 +582,31 @@
     
     
 
-<button id="login-btn" onclick="loginWithGoogle()">Login</button>
 
-<div id="user-info" style="display: none; text-align: center; margin-top: 1rem;">
+
+
+
+
+
+
+
+<div style="text-align: center; margin-top: 3rem;">
+  <button id="login-btn" onclick="showLoginForm()">Login</button>
+</div>
+
+<!-- Modal -->
+<div id="user-modal" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3); z-index: 1000;">
+  <h3>내 정보</h3>
   <p id="user-name"></p>
   <p id="user-email"></p>
   <button onclick="logout()">로그아웃</button>
+  <button onclick="closeModal()">닫기</button>
 </div>
 
-
-<div id="user-info" style="display: none; position: absolute; top: 50px; right: 10px; background: white; padding: 1rem; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-  <p id="user-name" style="margin: 0 0 0.5rem;"></p>
-  <p id="user-email" style="margin: 0 0 1rem;"></p>
-  <button onclick="logout()">로그아웃</button>
-</div>
+<!-- Modal overlay -->
+<div id="modal-overlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5); z-index: 999;" onclick="closeModal()"></div>
 
 </body>
 </html>

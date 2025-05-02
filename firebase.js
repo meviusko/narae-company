@@ -22,13 +22,6 @@ const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const auth = getAuth(app);
 
-// 로그인 상태 확인
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    updateUI(user);
-  }
-});
-
 // 로그인 버튼 클릭 시
 window.showLoginForm = async function () {
   const provider = new GoogleAuthProvider();
@@ -50,20 +43,32 @@ window.showLoginForm = async function () {
   }
 };
 
-// 로그인된 사용자 정보 표시
+// 로그인 상태 확인
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    updateUI(user);
+  }
+});
+
+// 로그인 후 버튼 변경
 function updateUI(user) {
   const btn = document.getElementById("login-btn");
   btn.textContent = "MY";
-  btn.onclick = toggleUserInfo;
-
-  document.getElementById("user-name").textContent = `이름: ${user.displayName}`;
-  document.getElementById("user-email").textContent = `이메일: ${user.email}`;
+  btn.onclick = () => openModal(user);
 }
 
-// 드롭다운 토글
-window.toggleUserInfo = function () {
-  const info = document.getElementById("user-info");
-  info.style.display = info.style.display === "none" ? "block" : "none";
+// 모달 열기
+function openModal(user) {
+  document.getElementById("user-name").textContent = `이름: ${user.displayName}`;
+  document.getElementById("user-email").textContent = `이메일: ${user.email}`;
+  document.getElementById("user-modal").style.display = "block";
+  document.getElementById("modal-overlay").style.display = "block";
+}
+
+// 모달 닫기
+window.closeModal = function () {
+  document.getElementById("user-modal").style.display = "none";
+  document.getElementById("modal-overlay").style.display = "none";
 };
 
 // 로그아웃
