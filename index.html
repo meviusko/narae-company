@@ -1,637 +1,75 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>최종 View버튼수정버전</title>
-<style>
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #f0f0f0;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    overflow-y: scroll;
-  }
-  .container {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 32px 16px;
-  }
-  .logo img {
-    width: 240px;
-    height: auto;
-    margin-bottom: 24px;
-  }
-  .sns-icons {
-    margin-bottom: 24px;
-  }
-  .sns-icons a {
-    margin: 0 8px;
-    display: inline-block;
-  }
-  .sns-icons img {
-    width: 32px;
-    height: 32px;
-  }
-  .link-card {
-    max-width: 400px;
-    margin: 12px auto;
-    display: block;
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    background: #727275;
-    color: #fff;
-    border-radius: 12px;
-    padding: 16px;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  .link-card + .link-card {
-    margin-top: 6px;
-  }
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-top: 12px;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .product-card {
-    background: #fff;
-    padding: 8px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: relative;
-  }
-  .product-card img {
-    width: 100%;
-    border-radius: 8px;
-  }
-  .product-title {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 8px 0;
-    padding: 0 4px;
-  }
-  .product-name {
-    font-weight: bold;
-    font-size: 0.9rem;
-    text-align: center;
-    margin-bottom: 4px;
-  }
-  .product-price {
-    text-align: center;
-  }
-  .original-price {
-    font-size: 0.8rem;
-    color: #999;
-    text-decoration: line-through;
-    margin-bottom: 2px;
-  }
-  .discount-price {
-    font-weight: bold;
-    color: #3b5770;
-    font-size: 0.9rem;
-  }
-  .view-toggle {
-    display: block;
-    margin: 4px auto;
-    padding: 6px 16px;
-    background-color: #3b5770;
-    color: #fff;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    text-align: center;
-    width: fit-content;
-    touch-action: manipulation;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .price-info {
-    font-size: 0.8rem;
-    margin-top: 6px;
-  }
-  
-  /* 모달 스타일 추가 */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-    overflow-y: auto;
-  }
-  
-  .modal-content {
-    position: relative;
-    background-color: white;
-    margin: 20px auto;
-    padding: 24px;
-    border-radius: 12px;
-    width: 95%;
-    max-width: 500px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-  
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-  }
-  
-  .modal-logo {
-    width: 160px;
-    height: auto;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  
-  .modal-logo:hover {
-    opacity: 0.8;
-  }
-  
-  .modal-body {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-  
-  .modal-image-container {
-    position: relative;
-    width: 100%;
-    height: 300px;
-    background: #f5f5f5;
-    border-radius: 8px;
-    overflow: hidden;
-    touch-action: pan-y;
-  }
-  
-  .modal-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: none;
-  }
-  
-  .modal-image.active {
-    display: block;
-  }
-  
-  .modal-image-title {
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 12px 0;
-  }
-  
-  .modal-slider-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  
-  .slider-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #ddd;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  
-  .slider-dot.active {
-    background: #3b5770;
-  }
-  
-  .modal-description {
-    font-size: 0.95rem;
-    color: #666;
-    line-height: 1.5;
-    margin-top: 16px;
-    text-align: left;
-    padding: 0 16px;
-  }
-  .modal-description p {
-    font-weight: bold;
-    margin-bottom: 12px;
-  }
-  .modal-description ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  .modal-description li {
-    margin-bottom: 8px;
-    position: relative;
-    padding-left: 20px;
-  }
-  .modal-description li:before {
-    content: "·";
-    position: absolute;
-    left: 0;
-    color: #3b5770;
-  }
-  .modal-actions {
-    position: sticky;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    gap: 8px;
-    padding: 12px 0;
-    box-sizing: border-box;
-    background: #fff;
-    border-top: 1px solid #eee;
-    margin-top: 16px;
-  }
-  .modal-btn {
-    flex: 1;
-    padding: 12px 0;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
-  }
-  .modal-btn.buy {
-    background: #3b5770;
-    color: #fff;
-  }
-  .modal-btn.cart {
-    background: #f0f0f0;
-    color: #3b5770;
-    border: 1px solid #3b5770;
-  }
-  @media (max-width: 600px) {
-    .modal-content {
-      margin: 10px auto;
-      padding: 16px;
-    }
-    .modal-actions {
-      padding: 12px 0;
-    }
-    .modal-logo {
-      width: 140px;
-    }
-  }
-  .ingredients-title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin: 24px 0 16px 0;
-    color: #333;
-  }
-  
-  .ingredients-section {
-    margin-bottom: 20px;
-  }
-  
-  .ingredients-section h5 {
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 12px 0 8px 0;
-    color: #444;
-  }
-  
-  .ingredients-section p {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: #666;
-    margin: 0;
-  }
-  
-  .modal-original-price {
-    font-size: 0.9rem;
-    color: #999;
-    margin-bottom: 4px;
-  }
-  
-  .modal-original-price .price-number {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .modal-original-price .price-number::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    height: 1px;
-    background-color: #ff0000;
-    opacity: 0.5;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나래 컴퍼니</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="container">
-  <div class="logo">
-    <img src="nr_logo.png" alt="회사 로고">
-  </div>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="img/nr_logo.png" alt="나래 컴퍼니 로고" onclick="goHome()">
+            </div>
+            <div class="nav-buttons">
+                <button onclick="showLoginForm()">로그인</button>
+            </div>
+        </nav>
+    </header>
 
-  <div class="sns-icons">
-    <a href="https://www.facebook.com/share/1JFkHKYCg4/?mibextid=wwXIfr" target="_blank"><img src="facebook.png" alt="Facebook"></a>
-    <a href="https://www.instagram.com/somya___ag?igsh=Zm4xbnU1ZnIwNXNz&utm_source=qr" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-    <a href="https://youtube.com/@khatadfilm7377?si=VFGZ3WNEGclvbdeK" target="_blank"><img src="youtube.png" alt="YouTube"></a>
-    <a href="https://lite.tiktok.com/t/ZSr7t6a2C/" target="_blank"><img src="tiktok.png" alt="TikTok"></a>
-  </div>
+    <main>
+        <div class="card-container">
+            <div class="card" onclick="toggleProducts(this, 'melaxin')">
+                <img src="img/nr_logo.png" alt="Dr. Melaxin">
+                <h2>Dr. Melaxin</h2>
+            </div>
+            <div class="card" onclick="toggleProducts(this, 'other')">
+                <img src="img/nr_logo.png" alt="Coming Soon">
+                <h2>Coming Soon</h2>
+            </div>
+        </div>
+    </main>
 
-  <div class="link-card" onclick="toggleProducts(this, 'melaxin')">Dr.Melaxin</div>
-  <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 1</div>
-  <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 2</div>
-  <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 3</div>
-  <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 4</div>
-  <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 5</div>
-</div>
-
-<div class="modal-overlay" id="productModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <img src="nr_logo.png" alt="로고" class="modal-logo" onclick="goHome()">
+    <!-- 제품 상세 모달 -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalImageContainer">
+                <img id="modalImage1" class="modal-image" src="" alt="제품 이미지 1">
+                <img id="modalImage2" class="modal-image" src="" alt="제품 이미지 2">
+                <img id="modalImage3" class="modal-image" src="" alt="제품 이미지 3">
+            </div>
+            <div class="slider-dots">
+                <span class="slider-dot active"></span>
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+            </div>
+            <h2 id="modalTitle"></h2>
+            <div id="modalPriceInfo"></div>
+            <div id="modalDescription"></div>
+        </div>
     </div>
-    <div class="modal-body">
-      <div class="modal-image-container" id="modalImageContainer">
-        <img class="modal-image active" id="modalImage1" src="s1.png" alt="샴푸 이미지1">
-        <img class="modal-image" id="modalImage2" src="s2.png" alt="샴푸 이미지2">
-        <img class="modal-image" id="modalImage3" src="s3.png" alt="샴푸 이미지3">
-      </div>
-      <div class="modal-slider-dots">
-        <span class="slider-dot active" onclick="showSlide(0)"></span>
-        <span class="slider-dot" onclick="showSlide(1)"></span>
-        <span class="slider-dot" onclick="showSlide(2)"></span>
-      </div>
-      <h3 class="modal-image-title" id="modalTitle"></h3>
-      <div class="modal-description" id="modalDescription">
-        <p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
-        <ul>
-          <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
-          <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
-          <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
-          <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
-          <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
-          <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
-        </ul>
-        
-        <h4 class="ingredients-title">Бүтээгдэхүүний бүрэн найрлага</h4>
-        
-        <div class="ingredients-section">
-          <h5>[Шампунь]</h5>
-          <p>Цэвэршүүлсэн ус, Натрийн лаурет сульфат, Аммонийн лаурил сульфат, Кокамидопропил бетаин, Кокамид метил МЭА, Анхилуун үнэртэн, Бутиленгликол, Натрийн хлорид, Натрийн бензоат, Цетил спирт, Диметикон, Гуа гидроксипропил триемониум хлорид, Трайгидроксистеарин, Глицерин, Ситрийн хүчил, Лаурил спирт, Динатрийн ЭДТА, Аммонийн сульфат, Этилгексилглицерин, Стрептококкус термофилус исгэлтийн бүтээгдэхүүн, Синтетик флюорфлогопит, Хар овъёосны ханд, Лецитин, Титаны диоксид, Миристил спирт, Стеарил спирт, Кали сорбат, Аргинин, Арганы самрын тос, 1,2-Гександиол, Каприлик/каприк триглицерид, Ус төрөгчжүүлсэн лецитин, Натрийн пальмитоил саркозинат, SH-Олигопептид-78, Лимонен, Линалол, Бензил салицилат, Бензил бензоат</p>
+
+    <!-- 로그인 모달 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideLoginForm()">&times;</span>
+            <h2>로그인</h2>
+            <form id="emailLoginForm">
+                <input type="email" id="email" placeholder="이메일" required>
+                <input type="password" id="password" placeholder="비밀번호" required>
+                <button type="submit">로그인</button>
+            </form>
+            <button onclick="loginWithGoogle()" class="google-login">
+                Google로 로그인
+            </button>
         </div>
-        
-        <div class="ingredients-section">
-          <h5>[Клиник]</h5>
-          <p>Цэвэршүүлсэн ус, Диметикон, Цетил спирт, Бехентримониум хлорид, Стеарил спирт, Бехентримониум метосульфат, Бутиленгликол, Анхилуун үнэртэн, Өөрчлөгдсөн спирт, Стеаратримониум хлорид, Амодиметикон, Пропиленгликол, Каприллилгликол, Этилгексилглицерин, Глутамины хүчил, Динатрийн ЭДТА, Стрептококкус термофилус исгэлтийн бүтээгдэхүүн, Наранцэцгийн үрийн тос, 1,2-Гександиол, Миристил спирт, Бета-каротин, Арганы самрын тос, Гидролизжүүлсэн арвайн уураг (1,000ppb), Каприлик/каприк триглицерид, Ус төрөгчжүүлсэн лецитин, Натрийн пальмитоил саркозинат, SH-Олигопептид-78, Лимонен, Линалол, Бензил салицилат, Бензил бензоат</p>
-        </div>
-      </div>
     </div>
-    <div class="modal-actions">
-      <button class="modal-btn buy" onclick="alert('구매하기 기능은 추후 구현됩니다.')">구매하기</button>
-      <button class="modal-btn cart" onclick="alert('장바구니 기능은 추후 구현됩니다.')">장바구니</button>
-    </div>
-  </div>
-</div>
 
-<script>
-// 이벤트 리스너 한 번만 등록
-document.addEventListener('DOMContentLoaded', function() {
-  const modal = document.getElementById('productModal');
-  
-  // ESC 키로 모달 닫기
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeModal();
-    }
-  });
-  
-  // 모달 외부 클릭시 닫기
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      closeModal();
-    }
-  });
+    <div id="firebase-output"></div>
 
-  // 모바일 뒤로가기 버튼 처리
-  window.addEventListener('popstate', function(e) {
-    if (modal.style.display === 'block') {
-      e.preventDefault();
-      closeModal();
-      history.pushState(null, '', window.location.href);
-    }
-  });
-});
-
-function toggleProducts(card, type) {
-  const existingGrid = card.nextElementSibling;
-
-  if (existingGrid && existingGrid.classList.contains('product-grid')) {
-    existingGrid.remove();
-    return;
-  }
-
-  const grid = document.createElement('div');
-  grid.className = 'product-grid';
-
-  let html = "";
-
-  if (type === 'melaxin') {
-    const products = [
-      { 
-        img: '206444_410774_554-removebg-preview.png', 
-        name: 'BonDex Clinic', 
-        originalPrice: 'Борлуулалтын үнэ 98,800 вон',
-        discountPrice: 'Хямдралтай үнэ 39,800 вон'
-      },
-      { 
-        img: '6128d637a82c2c472bba840d58a7c788-removebg-preview.png', 
-        name: 'EyePhalt', 
-        originalPrice: 'Борлуулалтын үнэ 99,000 вон',
-        discountPrice: 'Хямдралтай үнэ 59,000 вон'
-      },
-      { img: 'dr.melaxin_cemenrete.png', name: 'Cemenrete', price: '' },
-      { img: 'dr.melaxin_astaxanthin.png', name: 'Astaxanthin', price: '' },
-      { img: 'dr.melaxin_dubai_peptide.png', name: 'Dubai Peptide', price: '' }
-    ];
-    products.forEach((p) => {
-      html += `
-      <div class="product-card">
-        <img src="${p.img}" alt="${p.name}">
-        <div class="product-title">
-          <span class="product-name">${p.name}</span>
-          <span class="product-price">${p.price || ''}</span>
-        </div>
-        <p class="view-toggle" onclick="openModal('${p.img}', '${p.name}', '${p.originalPrice || ''}', '${p.discountPrice || ''}')">View</p>
-      </div>`;
-    });
-  } else {
-    for (let i = 0; i < 2; i++) {
-      html += `
-      <div class="product-card">
-        <img src="nr_logo.png" alt="Coming Soon">
-        <div class="product-title">
-          <span class="product-name">Coming Soon</span>
-          <span class="product-price"></span>
-        </div>
-      </div>`;
-    }
-  }
-
-  grid.innerHTML = html;
-  card.after(grid);
-}
-
-function openModal(imgSrc, title, originalPrice, discountPrice) {
-  const modal = document.getElementById('productModal');
-  const modalImg1 = document.getElementById('modalImage1');
-  const modalImg2 = document.getElementById('modalImage2');
-  const modalImg3 = document.getElementById('modalImage3');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalDescription = document.getElementById('modalDescription');
-  
-  // 모달 열 때 history 상태 추가
-  history.pushState({ modal: true }, '', window.location.href);
-  
-  if (title === 'BonDex Clinic') {
-    modalImg1.src = 's1.png';
-    modalImg2.src = 's2.png';
-    modalImg3.src = 's3.png';
-    modalDescription.style.display = 'block';
-  } else if (title === 'EyePhalt') {
-    modalImg1.src = 'a1.png';
-    modalImg2.src = 'a2.png';
-    modalImg3.src = 'a3.png';
-    modalDescription.style.display = 'block';
-    modalDescription.innerHTML = `
-      <p>[Нүд орчмын бүх асуудлын шийдэл, нүдний доорх хавангийн эзэлхүүнийг дээшлүүлэх эмнэлзүйн туршилт амжилттай]</p>
-      <ul>
-        <li>Арьсны липидтэй төстэй ВАСОМ ретинол агуулсан, будалтын дор хальцарч, гулгахгүй ZERO</li>
-        <li>Өдөрт хоёр удаа, тэлсэн төлөвт арчлах Day&Night хос өргөх шийдэл</li>
-        <li>Зөвхөн 1 удаагийн хэрэглээгээр нүдний доорх хавангийн эзэлхүүн хамгийн ихдээ 156.67% сайжирсан</li>
-        <li>Зөвхөн 1 удаагийн хэрэглээгээр үрчлээ хамгийн ихдээ 121.32% сайжирсан</li>
-        <li>Арьсны цочролын тест амжилттай дууссан</li>
-      </ul>
-      
-      <h4 class="ingredients-title">Бүрэн найрлага</h4>
-      <div class="ingredients-section">
-        <p>Цэвэршүүлсэн ус, Триметилпентандиол/Адипийн хүчил/Глицериний кроссполимер, Глицерин, Диметикон, Ниацинамид, Диметикон/Винилдиметиконы кроссполимер, 1,2-Гександиол, VP/VA кополимер, Натрийн акрилат/Натрийн акрилоилдиметилтаурийн кополимер, Изогексадекан, Гидроксипропилметилцеллюлоз, Амодиметикон, Полисорбат 80, Бутиленгликол, Канолын тос, Каприллилгликол, Сорбитан олеат, Этигексилглицерин, C12-14 Сек-Алкез-7, Аденозин, Одой анисын ханд, Пентиленгликол, Макадамийн үрийн тос, Каприлик/Каприк триглицерид, Устөрөгчжүүлсэн фосфатидилхолин, Ретинол, Пропиленгликол, Полисорбат 20, Этилийн спирт, PEG-5 Чаргана үрийн стерол, Рапсын стерол, Цетет-5, Цетет-3, Калийн цетилфосфат, BHT (бутилжуулсан гидрокситолуол), Холестерин, Луувангийн үрийн тос, Лецитин, Натрийн фосфат, SH-Олигопептид-1, Гидролизжүүлсэн далайн хөвд, Токоферил ацетат, Наранцэцгийн үрийн тос, Луувангийн ханд, Бета-каротин, Коллаген, Кофеин, Натрийн гиалуронат, Гидроксипропилтримониум гиалуронат, Натрийн ацетилилсан гиалуронат, Гидролизжүүлсэн гиалуроны хүчил, Гиалуроны хүчил, Натрийн гиалуронатын кроссполимер, Гидролизжүүлсэн натрийн гиалуронат, Калийн гиалуронат, Динатрийн ЭДТА, Анхилуун үнэртэн, Кумарин, Линалол</p>
-      </div>`;
-  } else {
-    modalImg1.src = imgSrc;
-    modalImg2.src = '';
-    modalImg3.src = '';
-    modalDescription.style.display = 'none';
-  }
-  
-  modalTitle.textContent = title;
-  
-  // 가격 정보 추가
-  const priceInfo = document.createElement('div');
-  priceInfo.className = 'modal-price-info';
-  if (originalPrice) {
-    const originalPriceDiv = document.createElement('div');
-    originalPriceDiv.className = 'modal-original-price';
-    // 정가 텍스트를 분리하여 숫자 부분만 취소선 적용
-    const priceText = originalPrice.split(' ');
-    originalPriceDiv.innerHTML = priceText.map((word, index) => {
-      if (word.includes('98,800') || word.includes('99,000')) {
-        return `<span class=\"price-number\">${word}</span>`;
-      }
-      return word;
-    }).join(' ');
-    priceInfo.appendChild(originalPriceDiv);
-  }
-  if (discountPrice) {
-    const discountPriceDiv = document.createElement('div');
-    discountPriceDiv.className = 'modal-discount-price';
-    discountPriceDiv.textContent = discountPrice;
-    priceInfo.appendChild(discountPriceDiv);
-  }
-  
-  // 기존 가격 정보가 있다면 제거
-  const existingPriceInfo = modalTitle.nextElementSibling;
-  if (existingPriceInfo && existingPriceInfo.className === 'modal-price-info') {
-    existingPriceInfo.remove();
-  }
-  
-  // 새로운 가격 정보 추가
-  modalTitle.after(priceInfo);
-  
-  modal.style.display = 'block';
-}
-
-let currentSlide = 0;
-
-function showSlide(index) {
-  const images = document.querySelectorAll('.modal-image');
-  const dots = document.querySelectorAll('.slider-dot');
-  if (index < 0) index = images.length - 1;
-  if (index >= images.length) index = 0;
-  images.forEach(img => img.classList.remove('active'));
-  dots.forEach(dot => dot.classList.remove('active'));
-  images[index].classList.add('active');
-  dots[index].classList.add('active');
-  currentSlide = index;
-}
-
-// 터치 및 마우스 이벤트 통합
-const imageContainer = document.getElementById('modalImageContainer');
-let startX = 0;
-let isDragging = false;
-
-function handleDragStart(e) {
-  startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-  isDragging = true;
-}
-
-function handleDragMove(e) {
-  if (!isDragging) return;
-  const currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-  const diffX = currentX - startX;
-  if (Math.abs(diffX) > 50) {
-    if (diffX < 0) showSlide(currentSlide + 1);
-    else showSlide(currentSlide - 1);
-    isDragging = false;
-  }
-}
-
-function handleDragEnd() {
-  isDragging = false;
-}
-
-// 터치 이벤트
-imageContainer.addEventListener('touchstart', handleDragStart);
-imageContainer.addEventListener('touchmove', handleDragMove);
-imageContainer.addEventListener('touchend', handleDragEnd);
-
-// 마우스 이벤트
-imageContainer.addEventListener('mousedown', handleDragStart);
-imageContainer.addEventListener('mousemove', handleDragMove);
-imageContainer.addEventListener('mouseup', handleDragEnd);
-imageContainer.addEventListener('mouseleave', handleDragEnd);
-
-function closeModal() {
-  const modal = document.getElementById('productModal');
-  modal.style.display = 'none';
-}
-
-function goHome() {
-  closeModal();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-</script>
+    <script type="module" src="firebase.js"></script>
+    <script src="script.js"></script>
 </body>
-</html>
+</html> 

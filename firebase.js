@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 // Firebase 설정
 const firebaseConfig = {
@@ -19,6 +20,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getDatabase(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 // Firebase 데이터 읽기
 const dbRef = ref(db, "test");
@@ -34,4 +37,18 @@ get(dbRef).then((snapshot) => {
   }
 }).catch((error) => {
   console.error("Firebase 데이터 가져오기 실패:", error);
-}); 
+});
+
+// Google 로그인 함수
+window.loginWithGoogle = async function() {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    console.log('로그인 성공:', user);
+    hideLoginForm();
+    alert('로그인 성공!');
+  } catch (error) {
+    console.error('로그인 실패:', error);
+    alert('로그인 실패: ' + error.message);
+  }
+}; 

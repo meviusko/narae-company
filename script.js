@@ -59,7 +59,7 @@ window.toggleProducts = function(card, type) {
           <span class="product-name">${p.name}</span>
           <span class="product-price">${p.price}</span>
         </div>
-        <button class="view-toggle" onclick="openModal('${p.name}', '${p.img}', '${p.price}', '${p.description || ''}', ${JSON.stringify(p.images || [])})">View</button>
+        <button class="view-toggle" onclick="openModal('${p.name}', '${p.img}', '${p.price}', ${JSON.stringify(p.description || '')}, ${JSON.stringify(p.images || [])})">View</button>
       </div>`;
     });
   } else {
@@ -111,7 +111,6 @@ window.openModal = function(title, imgSrc, price, description, images = []) {
   
   modalTitle.textContent = title;
   
-  // 가격 정보 업데이트
   if (price) {
     modalPriceInfo.innerHTML = `
       <div class="modal-original-price">
@@ -164,6 +163,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     console.log('이메일 로그인 시도:', email);
+    // TODO: 이메일 로그인 구현
+    alert('이메일 로그인 기능이 준비 중입니다.');
   });
 
   // 모달 외부 클릭시 닫기
@@ -192,6 +193,11 @@ document.addEventListener('DOMContentLoaded', function() {
   imageContainer.addEventListener('mousemove', handleDragMove);
   imageContainer.addEventListener('mouseup', handleDragEnd);
   imageContainer.addEventListener('mouseleave', handleDragEnd);
+
+  // 슬라이더 닷 클릭 이벤트
+  document.querySelectorAll('.slider-dot').forEach((dot, index) => {
+    dot.addEventListener('click', () => showSlide(index));
+  });
 });
 
 // 슬라이드 관련 함수들
