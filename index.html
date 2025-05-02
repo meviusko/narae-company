@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나래 컴퍼니</title>
     <style>
         body {
@@ -463,109 +463,111 @@
 
         @media screen and (max-width: 768px) {
             .view-toggle {
-                position: fixed;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 9999;
-                width: auto;
-                min-width: 120px;
-                padding: 10px 24px;
-                font-size: 1rem;
-                background-color: #3b5770;
-                color: #fff;
-                border-radius: 20px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-                display: inline-block !important;
+                position: fixed !important;
+                bottom: 20px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                z-index: 99999 !important;
+                width: auto !important;
+                min-width: 120px !important;
+                padding: 12px 24px !important;
+                font-size: 1rem !important;
+                background-color: #3b5770 !important;
+                color: #fff !important;
+                border-radius: 20px !important;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+                display: block !important;
                 visibility: visible !important;
                 opacity: 1 !important;
+                margin: 0 !important;
             }
 
             .product-card {
-                position: relative;
+                position: relative !important;
             }
 
             .product-card .view-toggle {
-                display: inline-block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
+                position: fixed !important;
+                bottom: 20px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+<div class="container">
         <div class="header-container">
-            <div class="logo">
-                <img src="img/nr_logo.png" alt="회사 로고">
-            </div>
+    <div class="logo">
+      <img src="img/nr_logo.png" alt="회사 로고">
+    </div>
             <div class="nav-buttons">
                 <button onclick="showLoginForm()">Login</button>
-            </div>
-        </div>
-
-        <div class="sns-icons">
-            <a href="https://www.facebook.com/share/1JFkHKYCg4/?mibextid=wwXIfr" target="_blank"><img src="img/facebook.png" alt="Facebook"></a>
-            <a href="https://www.instagram.com/somya___ag?igsh=Zm4xbnU1ZnIwNXNz&utm_source=qr" target="_blank"><img src="img/instagram.png" alt="Instagram"></a>
-            <a href="https://youtube.com/@khatadfilm7377?si=VFGZ3WNEGclvbdeK" target="_blank"><img src="img/youtube.png" alt="YouTube"></a>
-            <a href="https://lite.tiktok.com/t/ZSr7t6a2C/" target="_blank"><img src="img/tiktok.png" alt="TikTok"></a>
-        </div>
-
-        <div class="link-card" onclick="toggleProducts(this, 'melaxin')">Dr.Melaxin</div>
-        <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 1</div>
-        <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 2</div>
-        <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 3</div>
-        <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 4</div>
-        <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 5</div>
     </div>
+  </div>
 
-    <div class="modal-overlay" id="productModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <img src="img/nr_logo.png" alt="로고" class="modal-logo" onclick="goHome()">
-            </div>
-            <div class="modal-body">
-                <div class="modal-image-container" id="modalImageContainer">
-                    <img class="modal-image active" id="modalImage1" src="img/s1.png" alt="샴푸 이미지1">
-                    <img class="modal-image" id="modalImage2" src="img/s2.png" alt="샴푸 이미지2">
-                    <img class="modal-image" id="modalImage3" src="img/s3.png" alt="샴푸 이미지3">
-                </div>
-                <div class="modal-slider-dots">
-                    <span class="slider-dot active" onclick="showSlide(0)"></span>
-                    <span class="slider-dot" onclick="showSlide(1)"></span>
-                    <span class="slider-dot" onclick="showSlide(2)"></span>
-                </div>
-                <h3 class="modal-image-title" id="modalTitle"></h3>
-                <div class="modal-description" id="modalDescription">
-                    <p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
-                    <ul>
-                        <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
-                        <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
-                        <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
-                        <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
-                        <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
-                        <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
-                    </ul>
-                    
-                    <h4 class="ingredients-title">Бүтээгдэхүүний бүрэн найрлага</h4>
-                    
-                    <div class="ingredients-section">
-                        <h5>[Шампунь]</h5>
-                        <p>Цэвэршүүлсэн ус, Натрийн лаурет сульфат, Аммонийн лаурил сульфат, Кокамидопропил бетаин, Кокамид метил МЭА, Анхилуун үнэртэн, Бутиленгликол, Натринийн хлорид, Натринийн бензоат, Цетил спирт, Диметикон, Гуа гидроксипропил триемониум хлорид, Трайгидроксистеарин, Глицерин, Ситрийн хүчил, Лаурил спирт, Динатринийн ЭДТА, Аммонийн сульфат, Этилгексилглицерин, Стрептококкус термофилус исгэлтийн бүтээгдэхүүн, Синтетик флюорфлогопит, Хар овъёосны ханд, Лецитин, Титаны диоксид, Миристил спирт, Стеарил спирт, Кали сорбат, Аргинин, Арганы самрын тос, 1,2-Гександиол, Каприлик/каприк триглицерид, Ус төрөгчжүүлсэн лецитин, Натринийн пальмитоил саркозинат, SH-Олигопептид-78, Лимонен, Линалол, Бензил салицилат, Бензил бензоат</p>
-                    </div>
-                    
-                    <div class="ingredients-section">
-                        <h5>[Клиник]</h5>
+  <div class="sns-icons">
+    <a href="https://www.facebook.com/share/1JFkHKYCg4/?mibextid=wwXIfr" target="_blank"><img src="img/facebook.png" alt="Facebook"></a>
+    <a href="https://www.instagram.com/somya___ag?igsh=Zm4xbnU1ZnIwNXNz&utm_source=qr" target="_blank"><img src="img/instagram.png" alt="Instagram"></a>
+    <a href="https://youtube.com/@khatadfilm7377?si=VFGZ3WNEGclvbdeK" target="_blank"><img src="img/youtube.png" alt="YouTube"></a>
+    <a href="https://lite.tiktok.com/t/ZSr7t6a2C/" target="_blank"><img src="img/tiktok.png" alt="TikTok"></a>
+  </div>
+
+  <div class="link-card" onclick="toggleProducts(this, 'melaxin')">Dr.Melaxin</div>
+  <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 1</div>
+  <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 2</div>
+  <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 3</div>
+  <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 4</div>
+  <div class="link-card" onclick="toggleProducts(this, 'comingsoon')">Card 5</div>
+</div>
+
+<div class="modal-overlay" id="productModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <img src="img/nr_logo.png" alt="로고" class="modal-logo" onclick="goHome()">
+    </div>
+    <div class="modal-body">
+      <div class="modal-image-container" id="modalImageContainer">
+        <img class="modal-image active" id="modalImage1" src="img/s1.png" alt="샴푸 이미지1">
+        <img class="modal-image" id="modalImage2" src="img/s2.png" alt="샴푸 이미지2">
+        <img class="modal-image" id="modalImage3" src="img/s3.png" alt="샴푸 이미지3">
+      </div>
+      <div class="modal-slider-dots">
+        <span class="slider-dot active" onclick="showSlide(0)"></span>
+        <span class="slider-dot" onclick="showSlide(1)"></span>
+        <span class="slider-dot" onclick="showSlide(2)"></span>
+      </div>
+      <h3 class="modal-image-title" id="modalTitle"></h3>
+      <div class="modal-description" id="modalDescription">
+        <p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
+        <ul>
+          <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
+          <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
+          <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
+          <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
+          <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
+          <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
+        </ul>
+        
+        <h4 class="ingredients-title">Бүтээгдэхүүний бүрэн найрлага</h4>
+        
+        <div class="ingredients-section">
+          <h5>[Шампунь]</h5>
+                        <p>Цэвэршүүлсэн ус, Натринийн лаурет сульфат, Аммонийн лаурил сульфат, Кокамидопропил бетаин, Кокамид метил МЭА, Анхилуун үнэртэн, Бутиленгликол, Натринийн хлорид, Натринийн бензоат, Цетил спирт, Диметикон, Гуа гидроксипропил триемониум хлорид, Трайгидроксистеарин, Глицерин, Ситрийн хүчил, Лаурил спирт, Динатринийн ЭДТА, Аммонийн сульфат, Этилгексилглицерин, Стрептококкус термофилус исгэлтийн бүтээгдэхүүн, Синтетик флюорфлогопит, Хар овъёосны ханд, Лецитин, Титаны диоксид, Миристил спирт, Стеарил спирт, Кали сорбат, Аргинин, Арганы самрын тос, 1,2-Гександиол, Каприлик/каприк триглицерид, Ус төрөгчжүүлсэн лецитин, Натринийн пальмитоил саркозинат, SH-Олигопептид-78, Лимонен, Линалол, Бензил салицилат, Бензил бензоат</p>
+        </div>
+        
+        <div class="ingredients-section">
+          <h5>[Клиник]</h5>
                         <p>Цэвэршүүлсэн ус, Диметикон, Цетил спирт, Бехентримониум хлорид, Стеарил спирт, Бехентримониум метосульфат, Бутиленгликол, Анхилуун үнэртэн, Өөрчлөгдсөн спирт, Стеаратримониум хлорид, Амодиметикон, Пропиленгликол, Каприллигликол, Этилгексилглицерин, Глутамины хүчил, Динатринийн ЭДТА, Стрептококкус термофилус исгэлтийн бүтээгдэхүүн, Наранцэцгийн үрийн тос, 1,2-Гександиол, Миристил спирт, Бета-каротин, Арганы самрын тос, Гидролизжүүлсэн арвайн уураг (1,000ppb), Каприлик/каприк триглицерид, Ус төрөгчжүүлсэн лецитин, Натринийн пальмитоил саркозинат, SH-Олигопептид-78, Лимонен, Линалол, Бензил салицилат, Бензил бензоат</p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn buy" onclick="alert('구매하기 기능은 추후 구현됩니다.')">구매하기</button>
-                <button class="modal-btn cart" onclick="alert('장바구니 기능은 추후 구현됩니다.')">장바구니</button>
-            </div>
         </div>
+      </div>
     </div>
+    <div class="modal-actions">
+      <button class="modal-btn buy" onclick="alert('구매하기 기능은 추후 구현됩니다.')">구매하기</button>
+      <button class="modal-btn cart" onclick="alert('장바구니 기능은 추후 구현됩니다.')">장바구니</button>
+    </div>
+  </div>
+</div>
 
     <!-- 로그인 모달 -->
     <div id="loginModal" class="modal">
@@ -588,4 +590,4 @@
     <script type="module" src="firebase.js"></script>
     <script src="script.js"></script>
 </body>
-</html> 
+</html>

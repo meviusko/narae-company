@@ -1,19 +1,18 @@
 // Firebase SDK import
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 // Firebase 설정
 const firebaseConfig = {
-  apiKey: "AIzaSyDqQqXqXqXqXqXqXqXqXqXqXqXqXqXqXqXq",
-  authDomain: "narae-company.firebaseapp.com",
-  databaseURL: "https://narae-company-default-rtdb.firebaseio.com",
-  projectId: "narae-company",
-  storageBucket: "narae-company.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abcdefghijklmnopqrstuv",
-  measurementId: "G-ABCDEFGHIJ"
+  apiKey: "AIzaSyB00VqMZrAMXtD5K1gH6P-cvj36Hl0ibus",
+  authDomain: "nrcopany.firebaseapp.com",
+  projectId: "nrcopany",
+  storageBucket: "nrcopany.firebasestorage.app",
+  messagingSenderId: "869162796484",
+  appId: "1:869162796484:web:0cc702d188090aeedc1091",
+  measurementId: "G-105X4NDLJ8"
 };
 
 // Firebase 초기화
