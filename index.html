@@ -66,6 +66,8 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
         .product-card img {
             width: 100%;
@@ -99,7 +101,7 @@
             font-size: 0.9rem;
         }
         .view-toggle {
-            display: inline-block;
+            display: block;
             margin: 4px auto;
             padding: 6px 16px;
             background-color: #3b5770;
@@ -113,6 +115,8 @@
             outline: none;
             -webkit-tap-highlight-color: transparent;
             border: none;
+            align-self: center;
+            margin-top: auto;
         }
         .price-info {
             font-size: 0.8rem;
@@ -463,10 +467,17 @@
 
         @media screen and (max-width: 768px) {
             .nav-buttons {
-                margin-top: 16px;
+                margin-top: 32px;
             }
             .product-card {
-                position: relative !important;
+                position: relative;
+                min-height: 200px;
+                display: flex;
+                flex-direction: column;
+            }
+            .view-toggle {
+                width: fit-content;
+                margin-bottom: 8px;
             }
         }
     </style>
