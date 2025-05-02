@@ -22,30 +22,24 @@ const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const auth = getAuth(app);
 
-// 데이터베이스에서 데이터 읽기
-const dbRef = ref(database, "test");
-get(dbRef).then((snapshot) => {
-  if (snapshot.exists()) {
-    const data = snapshot.val();
-    document.getElementById("firebase-output").innerHTML = JSON.stringify(data);
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
-
 // Google 로그인
 window.loginWithGoogle = async function() {
   const provider = new GoogleAuthProvider();
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    console.log("Google 로그인 성공:", user);
-    alert("Google 로그인 성공!");
-    hideLoginForm();
+
+    // 사용자 정보 저장
+    await set(ref(database, "users/" + user.uid), {
+      name: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+      createdAt: new Date().toISOString()
+    });
+
+    alert("Google 로그인 성공 및 정보 저장 완료!");
   } catch (error) {
     console.error("Google 로그인 실패:", error);
-    alert("Google 로그인 실패: " + error.message);
+    alert("로그인 실패: " + error.message);
   }
-}; 
+};
