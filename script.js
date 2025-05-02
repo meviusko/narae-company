@@ -6,7 +6,6 @@ console.log('script.js 로드됨');
 // Google 로그인 함수
 window.loginWithGoogle = function() {
   console.log('Google 로그인 시도');
-  // Google 로그인 로직을 여기에 구현
   alert('Google 로그인 기능이 준비 중입니다.');
 };
 
@@ -27,7 +26,25 @@ window.toggleProducts = function(card, type) {
 
   if (type === 'melaxin') {
     const products = [
-      { img: 'img/206444_410774_554-removebg-preview.png', name: 'BonDex Clinic', price: '98,800원' },
+      { 
+        img: 'img/206444_410774_554-removebg-preview.png', 
+        name: 'BonDex Clinic', 
+        price: '98,800원',
+        images: [
+          'img/bondex1.jpg',
+          'img/bondex2.jpg',
+          'img/bondex3.jpg'
+        ],
+        description: `<p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
+        <ul>
+          <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
+          <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
+          <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
+          <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
+          <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
+          <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
+        </ul>`
+      },
       { img: 'img/6128d637a82c2c472bba840d58a7c788-removebg-preview.png', name: 'EyePhalt', price: '99,000원' },
       { img: 'img/dr.melaxin_cemenrete.png', name: 'Cemenrete', price: '' },
       { img: 'img/dr.melaxin_astaxanthin.png', name: 'Astaxanthin', price: '' },
@@ -42,7 +59,7 @@ window.toggleProducts = function(card, type) {
           <span class="product-name">${p.name}</span>
           <span class="product-price">${p.price}</span>
         </div>
-        <p class="view-toggle" onclick="openModal('${p.img}', '${p.name}', '${p.price}')">View</p>
+        <button class="view-toggle" onclick="openModal('${p.name}', '${p.img}', '${p.price}', '${p.description || ''}', ${JSON.stringify(p.images || [])})">View</button>
       </div>`;
     });
   } else {
@@ -62,43 +79,52 @@ window.toggleProducts = function(card, type) {
   card.after(grid);
 };
 
-window.openModal = function(imgSrc, title, price) {
+window.openModal = function(title, imgSrc, price, description, images = []) {
   console.log('openModal 호출됨:', title);
   const modal = document.getElementById('productModal');
-  const modalImg = document.getElementById('modalImage');
+  const modalImg1 = document.getElementById('modalImage1');
+  const modalImg2 = document.getElementById('modalImage2');
+  const modalImg3 = document.getElementById('modalImage3');
   const modalTitle = document.getElementById('modalTitle');
-  const modalPrice = document.getElementById('modalPrice');
+  const modalPriceInfo = document.getElementById('modalPriceInfo');
   const modalDescription = document.getElementById('modalDescription');
   
   history.pushState({ modal: true }, '', window.location.href);
   
-  modalImg.src = imgSrc;
-  modalTitle.textContent = title;
-  modalPrice.textContent = price;
+  if (title === 'BonDex Clinic' && images && images.length > 0) {
+    modalImg1.src = images[0];
+    modalImg2.src = images[1];
+    modalImg3.src = images[2];
+    modalImg1.classList.add('active');
+    modalImg2.classList.remove('active');
+    modalImg3.classList.remove('active');
+    currentSlide = 0;
+    updateSliderDots();
+  } else {
+    modalImg1.src = imgSrc;
+    modalImg2.src = '';
+    modalImg3.src = '';
+    modalImg1.classList.add('active');
+    modalImg2.classList.remove('active');
+    modalImg3.classList.remove('active');
+  }
   
-  if (title === 'BonDex Clinic') {
+  modalTitle.textContent = title;
+  
+  // 가격 정보 업데이트
+  if (price) {
+    modalPriceInfo.innerHTML = `
+      <div class="modal-original-price">
+        <span class="price-number">${price}</span>
+      </div>
+    `;
+  } else {
+    modalPriceInfo.innerHTML = '';
+  }
+  
+  if (description) {
     modalDescription.style.display = 'block';
-    modalDescription.innerHTML = `
-      <p>[Патентлагдсан уургийн бондо систем, гэмтсэн үсэнд зориулсан гэрийн салоны арчилгаа]</p>
-      <ul>
-        <li>Байгалийн аргаар сайжруулах боломжгүй гэмтэлтэй үсийг хамгийн ихдээ 120% сайжруулах нөлөө</li>
-        <li>Барзгар болсон үсний гадаргуугийн уураг холболтыг 50 цагийн турш хадгалах үр нөлөө</li>
-        <li>Уургийн бондо гол патентын найрлага 20,000ppm агуулсан</li>
-        <li>Тасарсан кератины дисульфид холбоог сэргээж үсний уургийн бүтцийг шинэчлэх</li>
-        <li>Хуурайшсан үсэнд үр дүнтэй AQUARICH® чийгшүүлэх арчилгаа агуулсан</li>
-        <li>Салонд эмчилгээ хийлгэсэн мэт өтгөрсөн нягт гэрийн арчилгаа</li>
-      </ul>`;
-  } else if (title === 'EyePhalt') {
-    modalDescription.style.display = 'block';
-    modalDescription.innerHTML = `
-      <p>[Нүд орчмын бүх асуудлын шийдэл, нүдний доорх хавангийн эзэлхүүнийг дээшлүүлэх эмнэлзүйн туршилт амжилттай]</p>
-      <ul>
-        <li>Арьсны липидтэй төстэй ВАСОМ ретинол агуулсан, будалтын дор хальцарч, гулгахгүй ZERO</li>
-        <li>Өдөрт хоёр удаа, тэлсэн төлөвт арчлах Day&Night хос өргөх шийдэл</li>
-        <li>Зөвхөн 1 удаагийн хэрэглээгээр нүдний доорх хавангийн эзэлхүүн хамгийн ихдээ 156.67% сайжирсан</li>
-        <li>Зөвхөн 1 удаагийн хэрэглээгээр үрчлээ хамгийн ихдээ 121.32% сайжирсан</li>
-        <li>Арьсны цочролын тест амжилттай дууссан</li>
-      </ul>`;
+    modalDescription.innerHTML = description;
   } else {
     modalDescription.style.display = 'none';
   }
@@ -154,4 +180,62 @@ document.addEventListener('DOMContentLoaded', function() {
       hideLoginForm();
     }
   });
-}); 
+
+  // 터치 이벤트
+  const imageContainer = document.getElementById('modalImageContainer');
+  imageContainer.addEventListener('touchstart', handleDragStart);
+  imageContainer.addEventListener('touchmove', handleDragMove);
+  imageContainer.addEventListener('touchend', handleDragEnd);
+
+  // 마우스 이벤트
+  imageContainer.addEventListener('mousedown', handleDragStart);
+  imageContainer.addEventListener('mousemove', handleDragMove);
+  imageContainer.addEventListener('mouseup', handleDragEnd);
+  imageContainer.addEventListener('mouseleave', handleDragEnd);
+});
+
+// 슬라이드 관련 함수들
+function showSlide(index) {
+  const images = document.querySelectorAll('.modal-image');
+  if (index < 0) index = images.length - 1;
+  if (index >= images.length) index = 0;
+  images.forEach(img => img.classList.remove('active'));
+  images[index].classList.add('active');
+  currentSlide = index;
+  updateSliderDots();
+}
+
+function updateSliderDots() {
+  const dots = document.querySelectorAll('.slider-dot');
+  dots.forEach((dot, index) => {
+    if (index === currentSlide) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
+}
+
+// 터치 및 마우스 이벤트 통합
+let startX = 0;
+let isDragging = false;
+
+function handleDragStart(e) {
+  startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+  isDragging = true;
+}
+
+function handleDragMove(e) {
+  if (!isDragging) return;
+  const currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+  const diffX = currentX - startX;
+  if (Math.abs(diffX) > 50) {
+    if (diffX < 0) showSlide(currentSlide + 1);
+    else showSlide(currentSlide - 1);
+    isDragging = false;
+  }
+}
+
+function handleDragEnd() {
+  isDragging = false;
+} 
