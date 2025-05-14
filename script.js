@@ -76,6 +76,7 @@ window.openModal = function(imgSrc, title, originalPrice, discountPrice) {
   const modalTitle = document.getElementById('modalTitle');
   const modalDescription = document.getElementById('modalDescription');
   
+  // 모달이 열릴 때 history state 추가
   history.pushState({ modal: true }, '', window.location.href);
   
   if (title === 'BonDex Clinic') {
@@ -150,6 +151,8 @@ window.closeModal = function() {
   console.log('closeModal 호출됨');
   const modal = document.getElementById('productModal');
   modal.style.display = 'none';
+  // 모달이 닫힐 때 history state 제거
+  history.back();
 };
 
 window.goHome = function() {
@@ -176,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // ESC 키로 모달 닫기
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' && modal.style.display === 'block') {
       closeModal();
     }
   });
@@ -191,9 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // 모바일 뒤로가기 버튼 처리
   window.addEventListener('popstate', function(e) {
     if (modal.style.display === 'block') {
-      e.preventDefault();
       closeModal();
-      history.pushState(null, '', window.location.href);
     }
   });
 
