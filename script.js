@@ -77,16 +77,27 @@ window.openModal = function(imgSrc, title, originalPrice, discountPrice) {
   const modalDescription = document.getElementById('modalDescription');
   
   // 모달이 열릴 때 history state 추가
-  if (!window.modalOpen) {
-    history.pushState({ modal: true }, '', window.location.href);
-    window.modalOpen = true;
-  }
+  history.pushState({ modal: true }, '', window.location.href);
   
   if (title === 'BonDex Clinic') {
     modalImg1.src = 'img/s1.png';
     modalImg2.src = 'img/s2.png';
     modalImg3.src = 'img/s3.png';
     modalDescription.style.display = 'block';
+    modalDescription.innerHTML = `
+      <p>[Нүд орчмын бүх асуудлын шийдэл, нүдний доорх хавангийн эзэлхүүнийг дээшлүүлэх эмнэлзүйн туршилт амжилттай]</p>
+      <ul>
+        <li>Арьсны липидтэй төстэй ВАСОМ ретинол агуулсан, будалтын дор хальцарч, гулгахгүй ZERO</li>
+        <li>Өдөрт хоёр удаа, тэлсэн төлөвт арчлах Day&Night хос өргөх шийдэл</li>
+        <li>Зөвхөн 1 удаагийн хэрэглээгээр нүдний доорх хавангийн эзэлхүүн хамгийн ихдээ 156.67% сайжирсан</li>
+        <li>Зөвхөн 1 удаагийн хэрэглээгээр үрчлээ хамгийн ихдээ 121.32% сайжирсан</li>
+        <li>Арьсны цочролын тест амжилттай дууссан</li>
+      </ul>
+      
+      <h4 class="ingredients-title">Бүрэн найрлага</h4>
+      <div class="ingredients-section">
+        <p>Цэвэршүүлсэн ус, Триметилпентандиол/Адипийн хүчил/Глицериний кроссполимер, Глицерин, Диметикон, Ниацинамид, Диметикон/Винилдиметиконы кроссполимер, 1,2-Гександиол, VP/VA кополимер, Натрийн акрилат/Натрийн акрилоилдиметилтаурийн кополимер, Изогексадекан, Гидроксипропилметилцеллюлоз, Амодиметикон, Полисорбат 80, Бутиленгликол, Канолын тос, Каприллилгликол, Сорбитан олеат, Этигексилглицерин, C12-14 Сек-Алкез-7, Аденозин, Одой анисын ханд, Пентиленгликол, Макадамийн үрийн тос, Каприлик/Каприк триглицерид, Устөрөгчжүүлсэн фосфатидилхолин, Ретинол, Пропиленгликол, Полисорбат 20, Этилийн спирт, PEG-5 Чаргана үрийн стерол, Рапсын стерол, Цетет-5, Цетет-3, Калийн цетилфосфат, BHT (бутилжуулсан гидрокситолуол), Холестерин, Луувангийн үрийн тос, Лецитин, Натрийн фосфат, SH-Олигопептид-1, Гидролизжүүлсэн далайн хөвд, Токоферил ацетат, Наранцэцгийн үрийн тос, Луувангийн ханд, Бета-каротин, Коллаген, Кофеин, Натрийн гиалуронат, Гидроксипропилтримониум гиалуронат, Натрийн ацетилилсан гиалуронат, Гидролизжүүлсэн гиалуроны хүчил, Гиалуроны хүчил, Натрийн гиалуронатын кроссполимер, Гидролизжүүлсэн натрийн гиалуронат, Калийн гиалуронат, Динатрийн ЭДТА, Анхилуун үнэртэн, Кумарин, Линалол</p>
+      </div>`;
   } else if (title === 'EyePhalt') {
     modalImg1.src = 'img/a1.png';
     modalImg2.src = 'img/a2.png';
@@ -178,11 +189,7 @@ window.closeModal = function() {
   console.log('closeModal 호출됨');
   const modal = document.getElementById('productModal');
   modal.style.display = 'none';
-  window.modalOpen = false;
-  // 모달이 닫힐 때 history state 제거
-  if (window.modalOpen) {
-    history.back();
-  }
+  history.back();
 };
 
 window.goHome = function() {
@@ -206,7 +213,6 @@ window.hideLoginForm = function() {
 // 이벤트 리스너 한 번만 등록
 document.addEventListener('DOMContentLoaded', function() {
   const modal = document.getElementById('productModal');
-  window.modalOpen = false;
   
   // ESC 키로 모달 닫기
   document.addEventListener('keydown', function(e) {
