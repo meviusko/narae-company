@@ -77,7 +77,10 @@ window.openModal = function(imgSrc, title, originalPrice, discountPrice) {
   const modalDescription = document.getElementById('modalDescription');
   
   // 모달이 열릴 때 history state 추가
-  history.pushState({ modal: true }, '', window.location.href);
+  if (!window.modalOpen) {
+    history.pushState({ modal: true }, '', window.location.href);
+    window.modalOpen = true;
+  }
   
   if (title === 'BonDex Clinic') {
     modalImg1.src = 'img/s1.png';
@@ -126,7 +129,12 @@ window.openModal = function(imgSrc, title, originalPrice, discountPrice) {
     modalImg1.src = imgSrc;
     modalImg2.src = '';
     modalImg3.src = '';
-    modalDescription.style.display = 'none';
+    modalDescription.style.display = 'block';
+    modalDescription.innerHTML = `
+      <p>[Coming Soon]</p>
+      <ul>
+        <li>제품 설명 준비 중입니다.</li>
+      </ul>`;
   }
   
   modalTitle.textContent = title;
@@ -170,8 +178,11 @@ window.closeModal = function() {
   console.log('closeModal 호출됨');
   const modal = document.getElementById('productModal');
   modal.style.display = 'none';
+  window.modalOpen = false;
   // 모달이 닫힐 때 history state 제거
-  history.back();
+  if (window.modalOpen) {
+    history.back();
+  }
 };
 
 window.goHome = function() {
@@ -195,6 +206,7 @@ window.hideLoginForm = function() {
 // 이벤트 리스너 한 번만 등록
 document.addEventListener('DOMContentLoaded', function() {
   const modal = document.getElementById('productModal');
+  window.modalOpen = false;
   
   // ESC 키로 모달 닫기
   document.addEventListener('keydown', function(e) {
