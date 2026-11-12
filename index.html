@@ -47,6 +47,9 @@ s{color:#999;font-size:13px}.pw{text-align:center;margin-bottom:12px}.pw b{font-
 .d ul{padding-left:18px;margin:8px 0}.d h4{margin:14px 0 4px;color:var(--fg)}.d{white-space:normal}
 label{display:block;margin-top:10px;font-size:13px;color:var(--mut)}.ok{text-align:center}.cd{font-size:26px;font-weight:700;letter-spacing:.08em;margin:8px 0;color:var(--nv)}
 .bk{background:var(--img);border-radius:8px;padding:12px;margin:12px 0;font-weight:600;white-space:pre-wrap}.hp{position:absolute;left:-9999px}
+.ed{background:none;border:0;color:#888;font-size:12px;margin-top:6px;cursor:pointer}
+.pc.add{border:2px dashed #ccc;background:none;box-shadow:none;justify-content:center;min-height:150px;color:#999;font-size:32px;cursor:pointer}.pc.add small{font-size:12px;color:#999}
+#adm{position:fixed;left:0;right:0;top:0;z-index:15;background:#3d5a73;color:#fff;font-size:12px;text-align:center;padding:4px}#adm a{color:#fff;margin-left:10px;text-decoration:underline;cursor:pointer}
 </style></head><body>
 <div class="pg"><div class="w">
 <img class="lg-img" src="img/yoojinpick.png" alt="Yoo Jin Pick">
@@ -63,14 +66,15 @@ label{display:block;margin-top:10px;font-size:13px;color:var(--mut)}.ok{text-ali
 <script src="config.js"></script><script src="products.js"></script>
 <script>
 const $=s=>document.querySelector(s),E=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=s=>!s?"":/</.test(s)?s:E(s).replace(/\n/g,"<br>");
 const W=n=>Number(n).toLocaleString()+" вон";
-let cart={},op={};try{cart=JSON.parse(localStorage.getItem("nrcart")||"{}")}catch(e){}
+let cart={},op={},admin=false;try{cart=JSON.parse(localStorage.getItem("nrcart")||"{}")}catch(e){}
 const save=()=>{try{localStorage.setItem("nrcart",JSON.stringify(cart))}catch(e){}};
 const cnt=()=>Object.values(cart).reduce((a,b)=>a+b,0);
 function render(){$("#cn").textContent=cnt();
  $("#bl").innerHTML=BRANDS.map((b,bi)=>{const L=PRODUCTS.map((p,i)=>[p,i]).filter(x=>x[0].brand==b);
-  const tiles=L.length?L.map(([p,i])=>`<div class="pc"><div class="pi"><img src="${p.cover}" alt="${E(p.name)}" loading="lazy"></div><b>${E(p.name)}</b><button class="vb" data-a="view" data-i="${i}">View</button></div>`).join(""):`<div class="pc"><div class="pi"><img src="img/nr_logo.png" alt=""></div><b>Coming Soon</b></div>`;
-  return `<button class="br" data-a="tg" data-i="${bi}">${E(b)}</button>`+(op[b]?`<div class="pl">${tiles}</div>`:"")}).join("")}
+  const tiles=L.length?L.map(([p,i])=>`<div class="pc"><div class="pi"><img src="${p.cover}" alt="${E(p.name)}" loading="lazy"></div><b>${E(p.name)}</b><button class="vb" data-a="view" data-i="${i}">View</button>${admin?`<button class="ed" data-a="edit" data-i="${i}">수정</button>`:""}</div>`).join(""):`<div class="pc"><div class="pi"><img src="img/nr_logo.png" alt=""></div><b>Coming Soon</b></div>`;
+  return `<button class="br" data-a="tg" data-i="${bi}">${E(b)}</button>`+(op[b]?`<div class="pl">${tiles}${admin?`<div class="pc add" data-a="newp" data-i="${bi}">+<small>상품 추가</small></div>`:""}</div>`:"")}).join("")}
 function show(h){$("#sh").innerHTML='<button class="x" data-a="close">×</button>'+h;$("#sh").scrollTop=0;$("#sh").style.display=$("#ov").style.display="block"}
 const price=p=>p.price?`<div class="pw">${p.orig?`<s>Борлуулалтын үнэ ${W(p.orig)}</s><br>`:""}<b>Хямдралтай үнэ ${W(p.price)}</b></div>`:`<div class="pw"><b>Үнэ лавлах</b></div>`;
 const A={
@@ -79,7 +83,7 @@ const A={
  view(i){const p=PRODUCTS[i];
   show(`<img class="lg-img" src="img/yoojinpick.png" alt=""><div class="cr" id="cr">${p.imgs.map(s=>`<div class="sl"><img src="${s}" alt=""></div>`).join("")}</div>
   <div class="dt">${p.imgs.length>1?p.imgs.map((_,k)=>`<i class="${k?"":"on"}" data-a="dot" data-i="${k}"></i>`).join(""):""}</div>
-  <div class="nm">${E(p.name)}</div>${price(p)}<hr><div class="d">${p.desc||""}</div>
+  <div class="nm">${E(p.name)}</div>${price(p)}<hr><div class="d">${fmt(p.desc)}</div>
   ${p.price?`<button class="btn" data-a="add" data-i="${i}">Сагсанд нэмэх</button>`:`<a class="btn" style="display:block;text-align:center;text-decoration:none" href="https://www.facebook.com/share/1JFkHKYCg4/?mibextid=wwXIfr" target="_blank" rel="noopener">Асуух (Facebook)</a>`}`);
   const c=$("#cr");c.onscroll=()=>{const k=Math.round(c.scrollLeft/c.clientWidth);document.querySelectorAll(".dt i").forEach((d,j)=>d.classList.toggle("on",j==k))}},
  dot(k){const c=$("#cr");c.scrollTo({left:k*c.clientWidth,behavior:"smooth"})},
@@ -99,4 +103,5 @@ const A={
 };
 document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(t&&A[t.dataset.a])A[t.dataset.a](t.dataset.i,t)});
 render();
+if(location.hash==="#admin"){const s=document.createElement("script");s.src="admin.js";document.body.appendChild(s)}
 </script></body></html>
