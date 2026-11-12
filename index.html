@@ -50,6 +50,7 @@ label{display:block;margin-top:10px;font-size:13px;color:var(--mut)}.ok{text-ali
 .ed{background:none;border:0;color:#888;font-size:12px;margin-top:6px;cursor:pointer}
 .pc.add{border:2px dashed #ccc;background:none;box-shadow:none;justify-content:center;min-height:150px;color:#999;font-size:32px;cursor:pointer}.pc.add small{font-size:12px;color:#999}
 #adm{position:fixed;left:0;right:0;top:0;z-index:15;background:#3d5a73;color:#fff;font-size:12px;text-align:center;padding:4px}#adm a{color:#fff;margin-left:10px;text-decoration:underline;cursor:pointer}
+#ts{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#333;color:#fff;padding:10px 18px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:40}
 </style></head><body>
 <div class="pg"><div class="w">
 <img class="lg-img" src="img/yoojinpick.png" alt="Yoo Jin Pick">
@@ -62,10 +63,11 @@ label{display:block;margin-top:10px;font-size:13px;color:var(--mut)}.ok{text-ali
 <div id="bl"></div>
 </div></div>
 <div class="fb"><button class="vb" data-a="cart">Сагс <span id="cn">0</span></button></div>
-<div id="ov" data-a="close"></div><div id="sh"></div>
+<div id="ts"></div><div id="ov" data-a="close"></div><div id="sh"></div>
 <script src="config.js"></script><script src="products.js"></script>
 <script>
 const $=s=>document.querySelector(s),E=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(m){const t=$("#ts");t.textContent=m;t.style.opacity=1;clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.opacity=0,1600)}
 const fmt=s=>!s?"":/</.test(s)?s:E(s).replace(/\n/g,"<br>");
 const W=n=>Number(n).toLocaleString()+" вон";
 let cart={},op={},admin=false;try{cart=JSON.parse(localStorage.getItem("nrcart")||"{}")}catch(e){}
@@ -87,19 +89,22 @@ const A={
   ${p.price?`<button class="btn" data-a="add" data-i="${i}">Сагсанд нэмэх</button>`:`<a class="btn" style="display:block;text-align:center;text-decoration:none" href="https://www.facebook.com/share/1JFkHKYCg4/?mibextid=wwXIfr" target="_blank" rel="noopener">Асуух (Facebook)</a>`}`);
   const c=$("#cr");c.onscroll=()=>{const k=Math.round(c.scrollLeft/c.clientWidth);document.querySelectorAll(".dt i").forEach((d,j)=>d.classList.toggle("on",j==k))}},
  dot(k){const c=$("#cr");c.scrollTo({left:k*c.clientWidth,behavior:"smooth"})},
- add(i){cart[i]=(cart[i]||0)+1;save();render();A.cart()},
+ add(i){cart[i]=(cart[i]||0)+1;save();render();A.close();toast("Сагсанд нэмэгдлээ ✓")},
  q(i,el){const d=+el.dataset.d;cart[i]=(cart[i]||0)+d;if(cart[i]<=0)delete cart[i];save();render();A.cart()},
  cart(){const it=Object.keys(cart).map(i=>[PRODUCTS[i],cart[i],i]).filter(x=>x[0]);const tot=it.reduce((a,[p,n])=>a+p.price*n,0);
   show(`<div class="t">Сагс</div>`+(it.length?it.map(([p,n,i])=>`<div class="row"><div>${E(p.name)}<br><small>${W(p.price)}</small></div><div class="q"><button data-a="q" data-i="${i}" data-d="-1">−</button>${n}<button data-a="q" data-i="${i}" data-d="1">+</button></div></div>`).join("")+`<div class="row"><b>Нийт</b><b>${W(tot)}</b></div><button class="btn" data-a="form">Захиалах</button>`:`<div class="empty">Сагс хоосон байна.</div>`))},
  form(){show(`<div class="t">Захиалга</div><label>Нэр</label><input id="fn" maxlength="80"><label>Утасны дугаар</label><input id="fp" type="tel" maxlength="30"><label>Хаяг</label><textarea id="fa" rows="3" maxlength="300"></textarea><label>Нэмэлт тайлбар (заавал биш)</label><input id="fm" maxlength="300"><input class="hp" id="fw" tabindex="-1" autocomplete="off"><div id="fe" style="color:#c33;font-size:13px;margin-top:8px"></div><button class="btn" data-a="send">Захиалга баталгаажуулах</button><button class="btn o" data-a="cart">← Буцах</button>`)},
- async send(i,btn){const v=id=>$(id).value.trim(),name=v("#fn"),phone=v("#fp"),address=v("#fa");
-  if(!name||phone.replace(/\D/g,"").length<8||!address){$("#fe").textContent="Нэр, утасны дугаар, хаягаа зөв бөглөнө үү.";return}
+ async send(i,btn){const v=id=>$(id).value.trim(),name=v("#fn"),phone=v("#fp"),address=v("#fa"),er=$("#fe");
+  if(!name||phone.replace(/\D/g,"").length<8||!address){er.textContent="Нэр, утасны дугаар, хаягаа зөв бөглөнө үү.";return}
+  if(typeof ORDER_URL!=="string"){er.textContent="Алдаа: config.js файлд алдаа байна (ORDER_URL).";return}
   const items=Object.keys(cart).map(i=>({name:PRODUCTS[i].name,qty:cart[i],price:PRODUCTS[i].price})),total=items.reduce((a,x)=>a+x.price*x.qty,0),code="NR-"+Date.now().toString(36).slice(-4).toUpperCase();
-  btn.disabled=true;btn.textContent="...";
-  try{if(ORDER_URL)await fetch(ORDER_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({code,name,phone,address,note:v("#fm"),items,total,website:v("#fw")})});
-   cart={};save();render();
-   show(`<div class="ok"><div class="t">Захиалга бүртгэгдлээ</div><div class="cd">${code}</div><p class="d">Доорх данс руу <b>${W(total)}</b> шилжүүлж, гүйлгээний утга дээр дээрх кодыг бичнэ үү.</p><div class="bk">${E(BANK.join("\n"))}</div><p class="d">Төлбөр орсны дараа бид тантай холбогдоно.${ORDER_URL?"":"<br>(테스트 모드: 주문이 전송되지 않았어요)"}</p><button class="btn" data-a="close">Хаах</button></div>`)}
-  catch(e){btn.disabled=false;btn.textContent="Захиалга баталгаажуулах";$("#fe").textContent="Алдаа гарлаа. Дахин оролдоно уу."}}
+  btn.disabled=true;btn.textContent="...";er.textContent="";
+  const url=ORDER_URL.trim(),init={method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({code,name,phone,address,note:v("#fm"),items,total,website:v("#fw")})};
+  try{if(url){try{const r=await fetch(url,init),j=await r.json();if(!j.ok)throw new Error("rejected")}catch(e){if(e.message==="rejected")throw e;await fetch(url,{...init,mode:"no-cors"})}}}
+  catch(e){btn.disabled=false;btn.textContent="Захиалга баталгаажуулах";er.textContent="Алдаа гарлаа. Дахин оролдоно уу. ("+e.name+": "+e.message+")";return}
+  cart={};save();render();
+  const BK=(typeof BANK!=="undefined"&&Array.isArray(BANK))?BANK:[];
+  show(`<div class="ok"><div class="t">Захиалга бүртгэгдлээ</div><div class="cd">${code}</div><p class="d">Доорх данс руу <b>${W(total)}</b> шилжүүлж, гүйлгээний утга дээр дээрх кодыг бичнэ үү.</p><div class="bk">${E(BK.join("\n"))}</div><p class="d">Төлбөр орсны дараа бид тантай холбогдоно.${url?"":"<br>(테스트 모드: 주문이 전송되지 않았어요)"}</p><button class="btn" data-a="close">Хаах</button></div>`)}
 };
 document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(t&&A[t.dataset.a])A[t.dataset.a](t.dataset.i,t)});
 render();
