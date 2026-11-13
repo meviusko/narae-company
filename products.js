@@ -1,5 +1,5 @@
-// 상품 목록: 여기만 고치면 사이트에 반영돼요 (price=할인가, orig=정가, 0이면 가격 문의)
-const BRANDS=["Facefood&Essello","Altist","Dr.melaxin","Celladix","Card 4","Card 5"];
+// 상품 목록 (관리자 화면에서 자동 저장돼요)
+const BRANDS=["Altist","Facefood&Essello","Dr.melaxin","Celladix","Card 4","Card 5"];
 const PRODUCTS=[
  {
   "name": "Essello",
