@@ -55,6 +55,7 @@ label{display:block;margin-top:10px;font-size:13px;color:var(--mut)}.ok{text-ali
 .cl{cursor:pointer;-webkit-tap-highlight-color:transparent;background:#e8f3fc;border:1px solid #bcdcf5;border-radius:12px;padding:10px 12px;margin:8px 0;text-align:center;transition:background .15s,transform .1s;user-select:none}
 .cl:active{transform:scale(.98);background:#d3e9fa}.cl small{display:block;color:#5b7f9c;font-size:12px}.cl b{display:block;font-size:17px;color:#1f4e79;word-break:break-all;margin:2px 0}.cl em{display:block;font-style:normal;font-size:11px;color:#6aa3d1}
 .cl.done{background:#d7f0e0;border-color:#a8dbb9}.cl.done em{color:#2e8b57}.cl .cd{margin:2px 0}.bk{background:none;padding:0;margin:4px 0;white-space:normal}.ok .d{white-space:normal;margin:8px 0}
+.ln{text-align:center;padding:6px 0}.ln small{display:block;color:var(--mut);font-size:12px}.ln b{display:block;font-size:17px;color:var(--fg);word-break:break-all;margin:2px 0}
 </style></head><body>
 <div class="pg"><div class="w">
 <img class="lg-img" src="img/yoojinpick.png" alt="Yoo Jin Pick">
@@ -111,13 +112,12 @@ const A={
   cart={};save();render();
   const BK=(typeof BANK!=="undefined"&&Array.isArray(BANK))?BANK:[];
   show(`<div class="ok"><div class="t">Захиалга бүртгэгдлээ</div>
-  <div class="cl" data-a="copy" data-t="${code}"><small>Захиалгын код</small><div class="cd">${code}</div><em>Дарж хуулах</em></div>
+  <div class="ln"><small>Захиалгын код</small><div class="cd">${code}</div></div>
   <p class="d">Доорх данс руу шилжүүлж, гүйлгээний утга дээр дээрх кодыг бичнэ үү.</p>
-  <div class="bk">
-   <div class="cl" data-a="copy" data-t="${total}"><small>Шилжүүлэх дүн</small><b>${W(total)}</b><em>Дарж хуулах</em></div>
-   ${BK.map(l=>{const k=l.indexOf(":"),lab=k>=0?l.slice(0,k).trim():"",val=k>=0?l.slice(k+1).trim():l;return `<div class="cl" data-a="copy" data-t="${E(val)}"><small>${E(lab)}</small><b>${E(val)}</b><em>Дарж хуулах</em></div>`}).join("")}
-  </div>
-  <p class="d">Төлбөр орсны дараа бид тантай холбогдоно.${url?"":"<br>(테스트 모드: 주문이 전송되지 않았어요)"}</p><button class="btn" data-a="close">Хаах</button></div>`)}
+  <div class="ln"><small>Шилжүүлэх дүн</small><b>${W(total)}</b></div>
+  ${BK.map(l=>{const k=l.indexOf(":"),lab=k>=0?l.slice(0,k).trim():"",val=k>=0?l.slice(k+1).trim():l,acc=/дугаар|данс|account|계좌/i.test(lab);
+   return acc?`<div class="cl" data-a="copy" data-t="${E(val)}"><small>${E(lab)}</small><b>${E(val)}</b><em>Дарж хуулах</em></div>`:`<div class="ln"><small>${E(lab)}</small><b>${E(val)}</b></div>`}).join("")}
+  <p class="d">Төлбөр орсны дараа бид тантай холбогдоно.</p><button class="btn" data-a="close">Хаах</button></div>`)}
 };
 document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(t&&A[t.dataset.a])A[t.dataset.a](t.dataset.i,t)});
 render();
