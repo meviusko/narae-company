@@ -1,5 +1,5 @@
 // 상품 목록 (관리자 화면에서 자동 저장돼요)
-const BRANDS=["Altist","Dr.melaxin","Facefood&Essello","Celladix","Card 4","card6","Card 5"];
+const BRANDS=["Altist","Dr.melaxin","Facefood&Essello","Celladix","Card 4","Card 5","card6"];
 const PRODUCTS=[
  {
   "name": "Essello",
