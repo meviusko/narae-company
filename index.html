@@ -51,6 +51,9 @@ label{display:block;margin-top:10px;font-size:13px;color:var(--mut)}.ok{text-ali
 .pc.add{border:2px dashed #ccc;background:none;box-shadow:none;justify-content:center;min-height:150px;color:#999;font-size:32px;cursor:pointer}.pc.add small{font-size:12px;color:#999}
 #adm{position:fixed;left:0;right:0;top:0;z-index:15;background:#3d5a73;color:#fff;font-size:12px;text-align:center;padding:4px}#adm a{color:#fff;margin-left:10px;text-decoration:underline;cursor:pointer}
 #ts{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#333;color:#fff;padding:10px 18px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:40}
+.bl{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;text-align:left}.bl span{word-break:break-all}.bl+.bl{border-top:1px solid var(--line)}
+.cp{background:var(--nv);color:#fff;border:0;border-radius:14px;padding:7px 14px;font-size:13px;cursor:pointer;flex:none}.ok>.cp{margin-bottom:6px}
+.bt{display:flex;gap:14px;justify-content:center;margin:-6px 0 12px;font-size:12px}.bt a{color:#888;cursor:pointer;text-decoration:underline}.br.add{border-style:dashed;color:#999;font-size:16px}
 </style></head><body>
 <div class="pg"><div class="w">
 <img class="lg-img" src="img/yoojinpick.png" alt="Yoo Jin Pick">
@@ -69,17 +72,19 @@ label{display:block;margin-top:10px;font-size:13px;color:var(--mut)}.ok{text-ali
 const $=s=>document.querySelector(s),E=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function toast(m){const t=$("#ts");t.textContent=m;t.style.opacity=1;clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.opacity=0,1600)}
 const fmt=s=>!s?"":/</.test(s)?s:E(s).replace(/\n/g,"<br>");
-const W=n=>Number(n).toLocaleString()+"₮";
+const W=n=>Number(n).toLocaleString()+" вон";
 let cart={},op={},admin=false;try{cart=JSON.parse(localStorage.getItem("nrcart")||"{}")}catch(e){}
 const save=()=>{try{localStorage.setItem("nrcart",JSON.stringify(cart))}catch(e){}};
 const cnt=()=>Object.values(cart).reduce((a,b)=>a+b,0);
 function render(){$("#cn").textContent=cnt();
  $("#bl").innerHTML=BRANDS.map((b,bi)=>{const L=PRODUCTS.map((p,i)=>[p,i]).filter(x=>x[0].brand==b);
   const tiles=L.length?L.map(([p,i])=>`<div class="pc"><div class="pi"><img src="${p.cover}" alt="${E(p.name)}" loading="lazy"></div><b>${E(p.name)}</b><button class="vb" data-a="view" data-i="${i}">View</button>${admin?`<button class="ed" data-a="edit" data-i="${i}">수정</button>`:""}</div>`).join(""):`<div class="pc"><div class="pi"><img src="img/nr_logo.png" alt=""></div><b>Coming Soon</b></div>`;
-  return `<button class="br" data-a="tg" data-i="${bi}">${E(b)}</button>`+(op[b]?`<div class="pl">${tiles}${admin?`<div class="pc add" data-a="newp" data-i="${bi}">+<small>상품 추가</small></div>`:""}</div>`:"")}).join("")}
+  return `<button class="br" data-a="tg" data-i="${bi}">${E(b)}</button>${admin?`<div class="bt"><a data-a="bren" data-i="${bi}">이름 변경</a><a data-a="bdel" data-i="${bi}">삭제</a><a data-a="bup" data-i="${bi}">▲ 위로</a><a data-a="bdn" data-i="${bi}">▼ 아래로</a></div>`:""}`+(op[b]?`<div class="pl">${tiles}${admin?`<div class="pc add" data-a="newp" data-i="${bi}">+<small>상품 추가</small></div>`:""}</div>`:"")}).join("")+(admin?'<button class="br add" data-a="bnew">+ 브랜드 추가</button>':"")}
 function show(h){$("#sh").innerHTML='<button class="x" data-a="close">×</button>'+h;$("#sh").scrollTop=0;$("#sh").style.display=$("#ov").style.display="block"}
 const price=p=>p.price?`<div class="pw">${p.orig?`<s>Борлуулалтын үнэ ${W(p.orig)}</s><br>`:""}<b>Хямдралтай үнэ ${W(p.price)}</b></div>`:`<div class="pw"><b>Үнэ лавлах</b></div>`;
 const A={
+ async copy(i,el){const t=el.dataset.t;let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){const a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;top:0;opacity:0";document.body.appendChild(a);a.focus();a.select();a.setSelectionRange(0,9999);try{ok=document.execCommand("copy")}catch(x){}a.remove()}
+  const o=el.dataset.o||el.textContent;el.dataset.o=o;el.textContent=ok?"Хуулсан ✓":"Алдаа";setTimeout(()=>el.textContent=o,1500)},
  close(){$("#sh").style.display=$("#ov").style.display="none"},
  tg(i){const b=BRANDS[i];op[b]=!op[b];render()},
  view(i){const p=PRODUCTS[i];
@@ -104,7 +109,7 @@ const A={
   catch(e){btn.disabled=false;btn.textContent="Захиалга баталгаажуулах";er.textContent="Алдаа гарлаа. Дахин оролдоно уу. ("+e.name+": "+e.message+")";return}
   cart={};save();render();
   const BK=(typeof BANK!=="undefined"&&Array.isArray(BANK))?BANK:[];
-  show(`<div class="ok"><div class="t">Захиалга бүртгэгдлээ</div><div class="cd">${code}</div><p class="d">Доорх данс руу <b>${W(total)}</b> шилжүүлж, гүйлгээний утга дээр дээрх кодыг бичнэ үү.</p><div class="bk">${E(BK.join("\n"))}</div><p class="d">Төлбөр орсны дараа бид тантай холбогдоно.${url?"":"<br>(테스트 모드: 주문이 전송되지 않았어요)"}</p><button class="btn" data-a="close">Хаах</button></div>`)}
+  show(`<div class="ok"><div class="t">Захиалга бүртгэгдлээ</div><div class="cd">${code}</div><button class="cp" data-a="copy" data-t="${code}">Хуулах</button><p class="d">Доорх данс руу <b>${W(total)}</b> шилжүүлж, гүйлгээний утга дээр дээрх кодыг бичнэ үү.</p><div class="bk"><div class="bl"><span>${W(total)}</span><button class="cp" data-a="copy" data-t="${total}">Хуулах</button></div>${BK.map(l=>{const k=l.indexOf(":"),val=k>=0?l.slice(k+1).trim():l;return `<div class="bl"><span>${E(l)}</span><button class="cp" data-a="copy" data-t="${E(val)}">Хуулах</button></div>`}).join("")}</div><p class="d">Төлбөр орсны дараа бид тантай холбогдоно.${url?"":"<br>(테스트 모드: 주문이 전송되지 않았어요)"}</p><button class="btn" data-a="close">Хаах</button></div>`)}
 };
 document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(t&&A[t.dataset.a])A[t.dataset.a](t.dataset.i,t)});
 render();
