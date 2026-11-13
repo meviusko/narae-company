@@ -15,17 +15,17 @@ const GH = { owner: "meviusko", repo: "narae-company", branch: "main" };
       const r = await api("/contents/products.js?ref=" + GH.branch + "&t=" + Date.now()), j = await r.json();
       if (!r.ok) throw new Error(j.message);
       const txt = dec(j.content), data = JSON.parse(txt.slice(txt.indexOf("const PRODUCTS=") + 15).trim().replace(/;$/, ""));
-      mut(data);
-      const out = "// 상품 목록 (관리자 화면에서 자동 저장돼요)\nconst BRANDS=" + JSON.stringify(BRANDS) + ";\nconst PRODUCTS=" + JSON.stringify(data, null, 1) + ";\n";
+      const bm = txt.match(/const BRANDS=(\[.*?\]);/s), brands = bm ? JSON.parse(bm[1]) : BRANDS.slice(); mut(data, brands);
+      const out = "// 상품 목록 (관리자 화면에서 자동 저장돼요)\nconst BRANDS=" + JSON.stringify(brands) + ";\nconst PRODUCTS=" + JSON.stringify(data, null, 1) + ";\n";
       const w = await put("products.js", enc(out), j.sha, msg);
-      if (w.ok) { PRODUCTS.length = 0; PRODUCTS.push(...data); return; }
+      if (w.ok) { PRODUCTS.length = 0; PRODUCTS.push(...data); BRANDS.length = 0; BRANDS.push(...brands); return; }
       if (w.status != 409 && w.status != 422) { const e = await w.json(); throw new Error(e.message); }
     }
     throw new Error("동시에 수정되어 실패했어요. 새로고침 후 다시 해주세요.");
   }
   const form = (p, i) => show(`<div class="t">${i === "" ? "상품 추가" : "상품 수정"}</div>
    <select id="eb">${BRANDS.map(b => `<option${b == p.brand ? " selected" : ""}>${E(b)}</option>`).join("")}</select>
-   <input id="en" placeholder="상품명" value="${E(p.name)}"><input id="ep" type="number" placeholder="할인가 (원, 0이면 가격 문의)" value="${E(p.price)}"><input id="eo" type="number" placeholder="정가 (원, 선택)" value="${E(p.orig)}">
+   <input id="en" placeholder="상품명" value="${E(p.name)}"><input id="ep" type="number" placeholder="할인가 (₮ 투그릭, 0이면 가격 문의)" value="${E(p.price)}"><input id="eo" type="number" placeholder="정가 (₮ 투그릭, 선택)" value="${E(p.orig)}">
    <textarea id="ed" rows="7" placeholder="상세 설명">${E(p.desc)}</textarea>
    <small>사진 1~3장 (첫 번째가 대표 사진, 바꿀 사진만 선택)</small><input id="f0" type="file" accept="image/*"><input id="f1" type="file" accept="image/*"><input id="f2" type="file" accept="image/*">
    <div id="fe" style="color:#c33;font-size:13px;margin-top:8px"></div>
@@ -49,6 +49,13 @@ const GH = { owner: "meviusko", repo: "narae-company", branch: "main" };
     try { await commit(d => { if (!d[i] || d[i].name !== old.name) throw new Error("다른 곳에서 수정됐어요."); d.splice(i, 1); }, "상품 삭제: " + old.name); render(); A.close(); }
     catch (e) { $("#fe").textContent = "삭제 실패: " + e.message; }
   };
+  const brandOp = async (fn, msg) => { try { await commit(fn, msg); render(); } catch (e) { alert("저장 실패: " + e.message); } };
+  const dup = (b, n) => { if (b.includes(n)) throw new Error("같은 이름이 이미 있어요."); };
+  A.bnew = () => { const n = (prompt("새 브랜드(카드) 이름") || "").trim(); if (!n) return; brandOp((d, b) => { dup(b, n); b.push(n); }, "브랜드 추가: " + n).then(() => { op[n] = true; render(); }); };
+  A.bren = i => { const o = BRANDS[i], n = (prompt("새 이름", o) || "").trim(); if (!n || n === o) return; op[n] = op[o]; brandOp((d, b) => { dup(b, n); const k = b.indexOf(o); if (k < 0) throw new Error("새로고침 후 다시 해주세요."); b[k] = n; d.forEach(p => { if (p.brand === o) p.brand = n; }); }, "브랜드 이름 변경: " + o + " → " + n); };
+  A.bdel = i => { const o = BRANDS[i]; if (PRODUCTS.some(p => p.brand === o)) { alert("이 브랜드에 상품이 있어요. 상품을 먼저 다른 브랜드로 옮기거나 삭제해 주세요."); return; } if (!confirm(o + " 카드를 삭제할까요?")) return; brandOp((d, b) => { const k = b.indexOf(o); if (k >= 0) b.splice(k, 1); }, "브랜드 삭제: " + o); };
+  A.bup = i => { const o = BRANDS[i]; brandOp((d, b) => { const k = b.indexOf(o); if (k > 0) [b[k - 1], b[k]] = [b[k], b[k - 1]]; }, "브랜드 순서 변경"); };
+  A.bdn = i => { const o = BRANDS[i]; brandOp((d, b) => { const k = b.indexOf(o); if (k >= 0 && k < b.length - 1) [b[k + 1], b[k]] = [b[k], b[k + 1]]; }, "브랜드 순서 변경"); };
   const bar = document.createElement("div"); bar.id = "adm"; bar.innerHTML = '관리자 모드 <a id="lo">로그아웃</a>'; document.body.prepend(bar);
   $("#lo").onclick = () => { localStorage.removeItem("ghtok"); location.hash = ""; location.reload(); };
   admin = true; render();
