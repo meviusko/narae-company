@@ -115,7 +115,7 @@ const A={
   <div class="ln"><small>Захиалгын код</small><div class="cd">${code}</div></div>
   <p class="d">Доорх данс руу шилжүүлж, гүйлгээний утга дээр дээрх кодыг бичнэ үү.</p>
   <div class="ln"><small>Шилжүүлэх дүн</small><b>${W(total)}</b></div>
-  ${BK.map(l=>{const k=l.indexOf(":"),lab=k>=0?l.slice(0,k).trim():"",val=k>=0?l.slice(k+1).trim():l,acc=/дугаар|данс|account|계좌/i.test(lab);
+  ${BK.map(l=>{const k=l.indexOf(":"),cl=x=>String(x).replace(/[()（）]/g,"").trim(),lab=k>=0?cl(l.slice(0,k)):"",val=cl(k>=0?l.slice(k+1):l),acc=/дугаар|данс|account|계좌/i.test(lab);
    return acc?`<div class="cl" data-a="copy" data-t="${E(val)}"><small>${E(lab)}</small><b>${E(val)}</b><em>Дарж хуулах</em></div>`:`<div class="ln"><small>${E(lab)}</small><b>${E(val)}</b></div>`}).join("")}
   <p class="d">Төлбөр орсны дараа бид тантай холбогдоно.</p><button class="btn" data-a="close">Хаах</button></div>`)}
 };
