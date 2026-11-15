@@ -220,5 +220,17 @@ const PRODUCTS=[
    "photos/cc7.webp"
   ],
   "desc": ""
+ },
+ {
+  "name": "On-Off 6 Cleanser",
+  "brand": "Essello",
+  "orig": 170000,
+  "price": 170000,
+  "cover": "photos/p1794752407110-0.webp",
+  "imgs": [
+   "photos/p1794752407110-0.webp",
+   "photos/p1794752408717-1.webp"
+  ],
+  "desc": "Нүүрний цэвэглэгч\n"
  }
 ];
