@@ -1,5 +1,5 @@
 // 상품 목록 (관리자 화면에서 자동 저장돼요)
-const BRANDS=["Essello","Facefood","Celladix","Exoreju","Sug Sug","Altist","Үс арчилгаа","Бусад"];
+const BRANDS=["Essello","Facefood","Celladix","Exoreju","Sug Sug","Altist","Hair","Бусад"];
 const PRODUCTS=[
  {
   "name": "Deep Exfoliation Gel",
@@ -94,7 +94,7 @@ const PRODUCTS=[
  },
  {
   "name": "BonDex Clinic",
-  "brand": "Үс арчилгаа",
+  "brand": "Hair",
   "orig": 98800,
   "price": 39800,
   "cover": "photos/206444-410774-554-removebg-preview.webp",
@@ -107,7 +107,7 @@ const PRODUCTS=[
  },
  {
   "name": "EyePhalt",
-  "brand": "Үс арчилгаа",
+  "brand": "Hair",
   "orig": 99000,
   "price": 59000,
   "cover": "photos/6128d637a82c2c472bba840d58a7c788-removebg-preview.webp",
@@ -120,7 +120,7 @@ const PRODUCTS=[
  },
  {
   "name": "Astaxanthin",
-  "brand": "Үс арчилгаа",
+  "brand": "Hair",
   "orig": 0,
   "price": 0,
   "cover": "photos/astax-image1.webp",
@@ -133,7 +133,7 @@ const PRODUCTS=[
  },
  {
   "name": "Dubai Peptide",
-  "brand": "Үс арчилгаа",
+  "brand": "Hair",
   "orig": 0,
   "price": 0,
   "cover": "photos/dr-melaxin-dubai-peptide.webp",
