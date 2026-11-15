@@ -2,13 +2,13 @@
 const BRANDS=["Essello","Facefood","Celladix","Exoreju","Sug Sug","Altist","Үс арчилгаа","Бусад"];
 const PRODUCTS=[
  {
-  "name": "Гүн гуужуулагч гель",
+  "name": "Deep Exfoliation Gel",
   "brand": "Essello",
   "orig": 145000,
   "price": 145000,
-  "cover": "photos/p1794750576654-0.webp",
+  "cover": "photos/p1794751353640-0.webp",
   "imgs": [
-   "photos/p1794750576654-0.webp",
+   "photos/p1794751353640-0.webp",
    "photos/p1794750578847-1.webp",
    "photos/ff1.webp"
   ],
