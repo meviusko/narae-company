@@ -1,9 +1,9 @@
 // 상품 목록 (관리자 화면에서 자동 저장돼요)
-const BRANDS=["Facefood&Essello","Altist","Dr.melaxin","Celladix","Card 4","Card 5","card6"];
+const BRANDS=["Essello","Altist","Dr.melaxin","Celladix","Card 4","Card 5","card6"];
 const PRODUCTS=[
  {
   "name": "Essello",
-  "brand": "Facefood&Essello",
+  "brand": "Essello",
   "orig": 75000,
   "price": 49000,
   "cover": "photos/ff1.webp",
@@ -16,7 +16,7 @@ const PRODUCTS=[
  },
  {
   "name": "FaceFood",
-  "brand": "Facefood&Essello",
+  "brand": "Essello",
   "orig": 68000,
   "price": 45000,
   "cover": "photos/ss3.webp",
